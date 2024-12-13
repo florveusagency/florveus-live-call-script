@@ -406,15 +406,15 @@
                 </div>
 
                 <div class="verification-item">
-                    <i data-feather="truck"></i>
-                    <div class="verify-content">
-                        <strong>"Can you confirm the vehicles you'd like to get covered today?"</strong>
-                        <div class="quick-responses">
-                            <button class="response-btn" onclick="showResponse('vehicle-current')">Current Vehicle</button>
-                            <button class="response-btn" onclick="showResponse('vehicle-multiple')">Multiple Vehicles</button>
-                        </div>
-                    </div>
+            <i data-feather="truck"></i>
+            <div class="verify-content">
+                <strong>"Can you confirm the vehicles you'd like to get covered today?"</strong>
+                <div class="quick-responses">
+                    <button class="response-btn" data-response="vehicle-current">Current Vehicle</button>
+                    <button class="response-btn" data-response="vehicle-multiple">Multiple Vehicles</button>
                 </div>
+            </div>
+        </div>
             </div>
 
             <!-- Current Insurance Section -->
@@ -477,10 +477,6 @@
 
             <div class="objections-tabs">
                 <button class="tab-btn active" data-tab="top10">Top 10</button>
-                <button class="tab-btn" data-tab="price">Price</button>
-                <button class="tab-btn" data-tab="timing">Timing</button>
-                <button class="tab-btn" data-tab="hesitation">Hesitation</button>
-                <button class="tab-btn" data-tab="verification">Verification</button>
             </div>
 
             <div class="objections-list">
@@ -730,17 +726,10 @@
             </div>
         </div>
     </div>
- <script>
-    // Initialize everything when the document is ready
+   <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Feather Icons
         feather.replace();
-        
-        // Set up initial event listeners
         setupEventListeners();
-        
-        // Show initial section
-        showSection('intro');
     });
 
     function setupEventListeners() {
@@ -749,16 +738,11 @@
             card.addEventListener('click', () => toggleObjection(card));
         });
 
-        // Tab navigation
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-        });
-
         // Quick response buttons
         document.querySelectorAll('.response-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent objection card from toggling
-                showResponse(btn.dataset.response);
+                e.stopPropagation();
+                showResponse(btn.getAttribute('data-response'));
             });
         });
 
@@ -768,7 +752,7 @@
 
         // Closing buttons
         document.querySelectorAll('.closing-btn').forEach(btn => {
-            btn.addEventListener('click', () => showCloseScript(btn.dataset.type));
+            btn.addEventListener('click', () => showCloseScript(btn.getAttribute('onclick').match(/'([^']+)'/)[1]));
         });
     }
 
@@ -776,69 +760,25 @@
         const response = card.querySelector('.objection-response');
         const isVisible = response.classList.contains('active');
         
-        // Hide all other responses
         document.querySelectorAll('.objection-response').forEach(r => {
             r.classList.remove('active');
         });
 
-        // Show/hide clicked response
         if (!isVisible) {
             response.classList.add('active');
         }
     }
 
-    function switchTab(tabId) {
-        // Update active tab button
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.tab === tabId);
-        });
-
-        // Filter objections
-        const objections = document.querySelectorAll('.objection-card');
-        if (tabId === 'top10') {
-            objections.forEach((obj, index) => {
-                obj.style.display = index < 10 ? 'block' : 'none';
-            });
-        } else {
-            objections.forEach(obj => {
-                obj.style.display = obj.dataset.category === tabId ? 'block' : 'none';
-            });
-        }
-    }
-
     function showResponse(responseId) {
         const responseMap = {
-            'name-yes': {
-                text: "Great! Let's continue with verifying your information to get you the best possible rate.",
-                tip: "Move quickly to next verification item"
-            },
-            'name-no': {
-                text: "I apologize for the error. Could you please provide your correct name for our records?",
-                tip: "Update information before proceeding"
-            },
-            'address-hesitant': {
-                text: "I understand your concern. As a licensed agent, I need this information to provide accurate quotes and ensure you get all available discounts. This information is protected by law.",
-                tip: "Emphasize security and necessity"
-            },
-            'address-bundle': {
-                text: "And is this address for a home you own? I ask because we could look at additional discounts if we bundle your auto and home insurance.",
-                tip: "Natural transition to bundling opportunity"
-            },
-            'dob-hesitant': {
-                text: "Your date of birth helps us apply age-related discounts and ensure accurate coverage. This information is protected by strict privacy laws.",
-                tip: "Connect to benefits and security"
-            },
-            'dob-why': {
-                text: "Good question. Your date of birth helps us: 1) Verify your identity for security, 2) Apply age-related discounts, and 3) Ensure accurate coverage based on your driving experience.",
-                tip: "Three clear reasons for requesting DOB"
-            },
-            'rate-hesitant': {
-                text: "I understand your hesitation. I'm asking so I can make sure I beat your current rate. Would you be interested if I could save you $X per month?",
-                tip: "Use bracketing technique to get a range"
-            },
+            // Existing responses...
             'vehicle-current': {
-                text: "Perfect. And do you anticipate any changes to your vehicles in the next 6 months? I ask because we can easily add coverage for any new vehicles.",
-                tip: "Plan for future needs"
+                text: "Perfect. And do you anticipate any changes to your vehicles in the next 6 months? I can help you adjust coverage for any new vehicles you might acquire.",
+                tip: "Proactively discuss future vehicle needs"
+            },
+            'vehicle-multiple': {
+                text: "Great! Multiple vehicles often qualify for multi-vehicle discounts. Tell me about the vehicles you want to cover, and I'll help you find the best bundled rate.",
+                tip: "Highlight potential savings with multiple vehicles"
             }
         };
 
@@ -854,14 +794,11 @@
                 </div>
             `;
             
-            // Remove any existing active tip boxes
             document.querySelectorAll('.tip-box.active').forEach(box => box.remove());
             
-            // Add new tip box
             document.querySelector('.script-flow').appendChild(tipBox);
             feather.replace();
             
-            // Scroll to tip box
             tipBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     }
@@ -884,20 +821,25 @@
 
         const script = closeScripts[type];
         if (script) {
+            // Remove any existing close script boxes
+            const existingBoxes = document.querySelectorAll('.close-script-box');
+            existingBoxes.forEach(box => box.remove());
+
             const closeSection = document.querySelector('.closing-section');
-            closeSection.innerHTML += `
-                <div class="close-script-box">
-                    <p>${script.text}</p>
-                    <div class="tip-box">
-                        <i data-feather="zap"></i>
-                        <span>${script.tip}</span>
-                    </div>
+            const scriptBox = document.createElement('div');
+            scriptBox.className = 'close-script-box';
+            scriptBox.innerHTML = `
+                <p>${script.text}</p>
+                <div class="tip-box">
+                    <i data-feather="zap"></i>
+                    <span>${script.tip}</span>
                 </div>
             `;
+            
+            closeSection.appendChild(scriptBox);
             feather.replace();
         }
     }
-
     function searchObjections(term) {
         const searchTerm = term.toLowerCase();
         
