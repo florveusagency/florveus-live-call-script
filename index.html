@@ -410,8 +410,8 @@
             <div class="verify-content">
                 <strong>"Can you confirm the vehicles you'd like to get covered today?"</strong>
                 <div class="quick-responses">
-                    <button class="response-btn" data-response="vehicle-current">Current Vehicle</button>
-                    <button class="response-btn" data-response="vehicle-multiple">Multiple Vehicles</button>
+                    <button class="response-btn" onclick="vehicle-current">Current Vehicle</button>
+                    <button class="response-btn" onclick="vehicle-multiple">Multiple Vehicles</button>
                 </div>
             </div>
         </div>
@@ -427,7 +427,7 @@
                     <div class="quick-responses">
                         <button class="response-btn" onclick="showResponse('rate-hesitant')">Won't Share Rate</button>
                         <button class="response-btn" onclick="showResponse('company-hesitant')">Won't Share Company</button>
-                        <button class="response-btn" onclick="showResponse('rate-too-high')">Rate Too High</button>
+                        <button class="response-btn" onclick="showResponse('rate-too-high')">My Rate Is High</button>
                     </div>
                     <div class="tip-box">
                         <i data-feather="lightbulb"></i>
