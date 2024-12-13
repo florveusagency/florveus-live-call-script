@@ -271,41 +271,102 @@
 
         /* Closing Section */
         .closing-section {
-            background: var(--primary);
-            color: var(--light);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-top: 2rem;
-        }
+    background: var(--primary);
+    color: var(--light);
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
 
-        .closing-section h3 {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+.closing-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(0,0,0,0.1));
+    opacity: 0.3;
+}
 
-        .closing-options {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
+.closing-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--secondary);
+    position: relative;
+    z-index: 1;
+}
 
-        .closing-btn {
-            background: var(--secondary);
-            color: var(--dark);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
+.closing-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: rgba(255,255,255,0.9);
+    position: relative;
+    z-index: 1;
+}
 
-        .closing-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+.closing-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.closing-btn {
+    background: var(--secondary);
+    color: var(--dark);
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.closing-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: all 0.5s ease;
+}
+
+.closing-btn:hover::before {
+    left: 100%;
+}
+
+.closing-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    background: var(--secondary-light);
+}
+
+.closing-btn i {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.5rem;
+}
 
         /* Responsive Design */
         @media (max-width: 1200px) {
