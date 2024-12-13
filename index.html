@@ -8,7 +8,11 @@
     <style>
         :root {
             --primary: #003087;  /* Allstate Blue */
+            --primary-dark: #002266;
+            --primary-light: #004db3;
             --secondary: #FFD100;  /* Allstate Yellow */
+            --secondary-dark: #e6bc00;
+            --secondary-light: #ffdb4d;
             --dark: #1A1A1A;
             --light: #FFFFFF;
             --gray-100: #f3f4f6;
@@ -41,6 +45,25 @@
             height: 100vh;
         }
 
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-400);
+        }
+
         /* Main Script Area */
         .script-area {
             flex: 1;
@@ -56,119 +79,144 @@
             padding: 1.5rem;
             border-radius: 8px;
             margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .script-header h1 {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .script-header p {
             font-size: 0.95rem;
             opacity: 0.9;
+            margin-top: 0.5rem;
         }
 
+        /* Verification Section */
         .verification-section {
             background: var(--gray-100);
             padding: 1.5rem;
             border-radius: 8px;
             margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .verification-section h3 {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
         }
 
         .verification-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
             background: var(--light);
+            padding: 1.25rem;
             border-radius: 6px;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             border: 1px solid var(--gray-200);
-            cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .verification-item:hover {
             border-color: var(--primary);
             transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        .verification-item i {
-            color: var(--primary);
+        .verify-content {
+            margin-left: 1.5rem;
         }
 
-        .script-flow {
-            background: var(--light);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--gray-200);
-            margin-bottom: 1.5rem;
-        }
-
-        .flow-step {
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .flow-step:last-child {
-            border-bottom: none;
-        }
-
-        .flow-step h3 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .script-text {
+        .verify-content strong {
+            display: block;
             color: var(--gray-700);
-            line-height: 1.6;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
+        .verify-content small {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+        }
+/* Response Buttons and Quick Actions */
         .quick-responses {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
-            margin-top: 0.5rem;
+            margin-top: 0.75rem;
         }
 
         .response-btn {
             background: var(--gray-100);
-            border: none;
+            border: 1px solid var(--gray-300);
             padding: 0.5rem 1rem;
             border-radius: 4px;
             color: var(--gray-700);
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .response-btn:hover {
-            background: var(--secondary);
-            color: var(--dark);
+            background: var(--primary);
+            color: var(--light);
+            border-color: var(--primary);
+        }
+
+        .response-content {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--primary-light);
+            border-radius: 4px;
+            color: var(--light);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .response-content.active {
+            display: block;
+        }
+
+        .response-content p {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .response-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
         }
 
         /* Objections Panel */
         .objections-panel {
             width: 400px;
             background: var(--light);
-            border-left: 1px solid var(--gray-200);
             display: flex;
             flex-direction: column;
+            border-left: 1px solid var(--gray-200);
         }
 
         .objections-header {
-            padding: 1.5rem;
             background: var(--primary);
             color: var(--light);
+            padding: 1.5rem;
         }
 
         .objections-header h2 {
             font-size: 1.25rem;
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .objections-search {
@@ -176,7 +224,7 @@
             align-items: center;
             gap: 0.5rem;
             background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem;
+            padding: 0.75rem;
             border-radius: 4px;
         }
 
@@ -186,6 +234,7 @@
             color: var(--light);
             width: 100%;
             outline: none;
+            font-size: 0.95rem;
         }
 
         .objections-search input::placeholder {
@@ -209,11 +258,16 @@
             white-space: nowrap;
             border-radius: 4px;
             transition: all 0.2s ease;
+            font-size: 0.9rem;
         }
 
         .tab-btn.active {
             background: var(--primary);
             color: var(--light);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: var(--gray-200);
         }
 
         .objections-list {
@@ -226,7 +280,7 @@
             background: var(--light);
             border: 1px solid var(--gray-200);
             border-radius: 8px;
-            padding: 1rem;
+            padding: 1.25rem;
             margin-bottom: 1rem;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -235,9 +289,44 @@
         .objection-card:hover {
             border-color: var(--primary);
             transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .objection-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .objection-response {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-200);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .objection-response.active {
+            display: block;
+        }
+
+        .response-text {
+            color: var(--gray-700);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .follow-up {
+            background: var(--gray-100);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 0.75rem;
+        }
+
+        .follow-up-title {
             color: var(--primary);
             font-weight: 600;
             margin-bottom: 0.5rem;
@@ -246,155 +335,401 @@
             gap: 0.5rem;
         }
 
-        .objection-response {
-            display: none;
-            margin-top: 0.5rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid var(--gray-200);
+        .follow-up-text {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
-        .objection-response.active {
-            display: block;
-        }
-
+        /* Tip Boxes */
         .tip-box {
-            background: var(--gray-100);
+            background: var(--secondary-light);
             border-left: 4px solid var(--secondary);
             padding: 1rem;
             margin: 1rem 0;
             border-radius: 0 4px 4px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
         }
 
         .tip-box i {
-            color: var(--secondary);
+            color: var(--secondary-dark);
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            margin-top: 0.2rem;
         }
 
-        /* Closing Section */
+        .tip-box-content {
+            flex: 1;
+        }
+
+        .tip-box-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .tip-box-text {
+            color: var(--gray-700);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+/* Closing Section Styles */
         .closing-section {
             background: var(--primary);
-            color: var(--light);
-            padding: 1.5rem;
+            padding: 2rem;
             border-radius: 8px;
             margin-top: 2rem;
+            color: var(--light);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .closing-section h3 {
-            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            color: var(--secondary);
+        }
+
+        .closing-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
 
         .closing-options {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .closing-btn {
             background: var(--secondary);
             color: var(--dark);
             border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             transition: all 0.2s ease;
+            text-align: center;
         }
 
         .closing-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: var(--secondary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .objections-panel {
-                width: 350px;
+        .closing-btn i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .closing-response {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .closing-response.active {
+            display: block;
+        }
+
+        .closing-response-title {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .closing-steps {
+            margin-top: 1rem;
+        }
+
+        .closing-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .closing-step:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .closing-step i {
+            color: var(--secondary);
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .closing-step-content {
+            flex: 1;
+        }
+
+        .closing-step-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--secondary);
+        }
+
+        .closing-step-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
             }
-            
-            .objections-panel {
-                width: 100%;
-                max-height: 400px;
+            to {
+                opacity: 1;
             }
         }
-    </style>
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Response Display Styles */
+        .verification-response {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--primary-light);
+            border-radius: 4px;
+            color: var(--light);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .verification-response.active {
+            display: block;
+        }
+
+        .verification-response p {
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .verification-response .follow-up {
+            background: rgba(255,255,255,0.1);
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin-top: 0.75rem;
+        }
+
+        .verification-response .tip {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+</style>
 </head>
 <body>
     <div class="container">
         <!-- Main Script Area -->
         <div class="script-area">
             <div class="script-header">
-                <h1>Lead Transfer Script</h1>
+                <h1><i data-feather="shield"></i>Insurance Sales Script</h1>
                 <p>Lead Source: Web Transfer | Product Focus: Auto Insurance</p>
             </div>
 
             <!-- Introduction Section -->
-            <div class="script-flow">
-                <div class="flow-step">
-                    <h3><i data-feather="user"></i>Introduction</h3>
-                    <div class="script-text">
-                        "Hi, my name is [Agent Name] and I'm a licensed insurance agent with Allstate. I understand you're interested in saving money on your auto insurance, is that correct?"
-                    </div>
-                    <div class="tip-box">
-                        <i data-feather="lightbulb"></i>
-                        <span>Wait for confirmation before proceeding. Establish authority with "licensed agent" mention.</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Verification Section -->
             <div class="verification-section">
-                <h3><i data-feather="shield"></i>Verification Flow</h3>
+                <h3><i data-feather="user"></i>Introduction & Verification</h3>
                 
                 <div class="verification-item">
-                    <i data-feather="check-circle"></i>
                     <div class="verify-content">
-                        <strong>"I have your name as [First Name], is that correct?"</strong>
+                        <strong>Opening Script</strong>
+                        <p>"Hi, my name is [Agent Name] and I'm a licensed insurance agent with Allstate. I understand you're interested in saving money on your auto insurance, is that correct?"</p>
                         <div class="quick-responses">
-                            <button class="response-btn" onclick="showResponse('name-yes')">Yes Response</button>
-                            <button class="response-btn" onclick="showResponse('name-no')">No Response</button>
+                            <button class="response-btn" data-response="confirm-interest">
+                                <i data-feather="check"></i>Shows Interest
+                            </button>
+                            <button class="response-btn" data-response="deny-interest">
+                                <i data-feather="x"></i>Denies Interest
+                            </button>
+                        </div>
+                        <div class="verification-response" id="confirm-interest-response">
+                            <p>"Perfect! I've received your information and I can definitely help you save money today. Let me verify a few quick details to make sure I get you the best possible rate."</p>
+                            <div class="tip">
+                                <i data-feather="zap"></i>
+                                <span>Move quickly to verification while maintaining momentum</span>
+                            </div>
+                        </div>
+                        <div class="verification-response" id="deny-interest-response">
+                            <p>"I understand. I'm actually calling because you recently requested information about saving money on your auto insurance. Has anything changed about your current policy that made you look into other options?"</p>
+                            <div class="tip">
+                                <i data-feather="zap"></i>
+                                <span>Re-engage by referencing their initial inquiry</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="verification-item">
-                    <i data-feather="home"></i>
                     <div class="verify-content">
-                        <strong>"And for security purposes, could you verify your address for me?"</strong>
+                        <strong>Name Verification</strong>
+                        <p>"I have your name as [First Name], is that correct?"</p>
+                        <div class="quick-responses">
+                            <button class="response-btn" data-response="name-correct">
+                                <i data-feather="check"></i>Name Correct
+                            </button>
+                            <button class="response-btn" data-response="name-incorrect">
+                                <i data-feather="edit-2"></i>Name Incorrect
+                            </button>
+                        </div>
+                        <div class="verification-response" id="name-correct-response">
+                            <p>"Great! And just to ensure I provide you accurate rates and all available discounts, I'll need to verify a couple more details."</p>
+                        </div>
+                        <div class="verification-response" id="name-incorrect-response">
+                            <p>"I apologize for the error. Could you please provide me with the correct spelling of your name? This helps ensure all your documents are accurate."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="verification-item">
+                    <div class="verify-content">
+                        <strong>Address Verification & Bundle Opportunity</strong>
+                        <p>"For security purposes and to check available discounts, could you verify your address for me?"</p>
                         <small>(Bundling Opportunity)</small>
                         <div class="quick-responses">
-                            <button class="response-btn" onclick="showResponse('address-hesitant')">Address Hesitant</button>
-                            <button class="response-btn" onclick="showResponse('address-bundle')">Bundle Opportunity</button>
+                            <button class="response-btn" data-response="address-willing">
+                                <i data-feather="home"></i>Provides Address
+                            </button>
+                            <button class="response-btn" data-response="address-hesitant">
+                                <i data-feather="shield"></i>Address Hesitant
+                            </button>
+                            <button class="response-btn" data-response="address-homeowner">
+                                <i data-feather="key"></i>Homeowner Opportunity
+                            </button>
+                        </div>
+                        <div class="verification-response" id="address-willing-response">
+                            <p>"Thank you. And is this address for a home you own? I ask because we could look at our home and auto bundle discount which saves most customers an additional 20%."</p>
+                            <div class="tip">
+                                <i data-feather="zap"></i>
+                                <span>Natural transition to exploring bundle opportunities</span>
+                            </div>
+                        </div>
+                        <div class="verification-response" id="address-hesitant-response">
+                            <p>"I completely understand your privacy concerns. As a licensed agent, I need this information to ensure you get all available discounts, including those based on your area. This information is protected by strict privacy laws. Would that be okay?"</p>
+                            <div class="tip">
+                                <i data-feather="zap"></i>
+                                <span>Address security concerns while emphasizing benefits</span>
+                            </div>
+                        </div>
+                        <div class="verification-response" id="address-homeowner-response">
+                            <p>"That's excellent! As a homeowner, you qualify for our premium bundle discount. Most customers save 20% or more on both policies. Would you like me to quote both home and auto together to maximize your savings?"</p>
+                        </div>
+                    </div>
+                </div>
+<div class="verification-item">
+                    <div class="verify-content">
+                        <strong>Date of Birth Verification</strong>
+                        <p>"And could you verify your date of birth for me?"</p>
+                        <div class="quick-responses">
+                            <button class="response-btn" data-response="dob-willing">
+                                <i data-feather="calendar"></i>Provides DOB
+                            </button>
+                            <button class="response-btn" data-response="dob-hesitant">
+                                <i data-feather="help-circle"></i>DOB Hesitant
+                            </button>
+                            <button class="response-btn" data-response="dob-why">
+                                <i data-feather="help-circle"></i>Asks Why Needed
+                            </button>
+                        </div>
+                        <div class="verification-response" id="dob-willing-response">
+                            <p>"Thank you. This helps me ensure you get all age-related discounts you qualify for."</p>
+                            <div class="tip">
+                                <i data-feather="zap"></i>
+                                <span>Immediately connect information to benefits</span>
+                            </div>
+                        </div>
+                        <div class="verification-response" id="dob-hesitant-response">
+                            <p>"I completely understand your concern. Your date of birth helps us apply specific discounts you might qualify for based on your age and driving experience. It's also required for accurate quote generation. This information is protected by law. Would that be okay?"</p>
+                            <div class="follow-up">
+                                <i data-feather="arrow-right"></i>
+                                <span>If still hesitant: "Without your DOB, I won't be able to provide you with an accurate quote or ensure you get all available discounts. Would you prefer to provide this information now or would you like to speak with a supervisor about our privacy policies?"</span>
+                            </div>
+                        </div>
+                        <div class="verification-response" id="dob-why-response">
+                            <p>"Great question! Your date of birth helps us in three ways: 1) It ensures you get all age-related discounts, 2) It helps verify your driving experience for better rates, and 3) It's required for accurate quote generation. Plus, it helps protect your identity when making policy changes. Would you be comfortable sharing that with me now?"</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="verification-item">
-                    <i data-feather="calendar"></i>
                     <div class="verify-content">
-                        <strong>"And your date of birth?"</strong>
-                        <small>(Security Verification)</small>
+                        <strong>Vehicle Information</strong>
+                        <p>"Can you confirm the vehicles you'd like to get covered today?"</p>
                         <div class="quick-responses">
-                            <button class="response-btn" onclick="showResponse('dob-hesitant')">DOB Hesitant</button>
-                            <button class="response-btn" onclick="showResponse('dob-why')">Why Needed</button>
+                            <button class="response-btn" data-response="vehicle-single">
+                                <i data-feather="truck"></i>Single Vehicle
+                            </button>
+                            <button class="response-btn" data-response="vehicle-multiple">
+                                <i data-feather="truck"></i>Multiple Vehicles
+                            </button>
+                            <button class="response-btn" data-response="vehicle-future">
+                                <i data-feather="plus-circle"></i>Future Vehicle
+                            </button>
                         </div>
-                    </div>
-                </div>
-
-                <div class="verification-item">
-                    <i data-feather="truck"></i>
-                    <div class="verify-content">
-                        <strong>"Can you confirm the vehicles you'd like to get covered today?"</strong>
-                        <div class="quick-responses">
-                            <button class="response-btn" onclick="showResponse('vehicle-current')">Current Vehicle</button>
-                            <button class="response-btn" onclick="showResponse('vehicle-multiple')">Multiple Vehicles</button>
+                        <div class="verification-response" id="vehicle-single-response">
+                            <p>"Perfect. And just to ensure you get the best rate, do you anticipate adding any vehicles in the next 6 months? I ask because we can easily add coverage for new vehicles, and the more vehicles you insure with us, the more you save."</p>
+                        </div>
+                        <div class="verification-response" id="vehicle-multiple-response">
+                            <p>"Excellent! Multiple vehicles qualify you for our multi-car discount. Let me make sure I get all the details so you receive the maximum discount available."</p>
+                            <div class="tip">
+                                <i data-feather="zap"></i>
+                                <span>Emphasize savings increase with each vehicle</span>
+                            </div>
+                        </div>
+                        <div class="verification-response" id="vehicle-future-response">
+                            <p>"That's good to know! We can set up your policy now with current vehicles and easily add the new one when you get it. This ensures you lock in current rates and discounts. Would that work for you?"</p>
                         </div>
                     </div>
                 </div>
@@ -402,48 +737,104 @@
 
             <!-- Current Insurance Section -->
             <div class="script-flow">
-                <div class="flow-step">
-                    <h3><i data-feather="dollar-sign"></i>Current Insurance Discussion</h3>
-                    <div class="script-text">
-                        "Who are you currently insured with, and what's your typical monthly payment?"
-                    </div>
-                    <div class="quick-responses">
-                        <button class="response-btn" onclick="showResponse('rate-hesitant')">Won't Share Rate</button>
-                        <button class="response-btn" onclick="showResponse('company-hesitant')">Won't Share Company</button>
-                        <button class="response-btn" onclick="showResponse('rate-too-high')">Rate Too High</button>
-                    </div>
-                    <div class="tip-box">
-                        <i data-feather="lightbulb"></i>
-                        <span>If customer hesitates: "I understand your hesitation. I ask because it helps me ensure I can find you better coverage at a better rate."</span>
+                <h3><i data-feather="dollar-sign"></i>Current Insurance Discussion</h3>
+                
+                <div class="verification-item">
+                    <div class="verify-content">
+                        <strong>Current Coverage Investigation</strong>
+                        <p>"Who are you currently insured with, and what's your typical monthly payment?"</p>
+                        <div class="quick-responses">
+                            <button class="response-btn" data-response="shares-current">
+                                <i data-feather="check"></i>Shares Info
+                            </button>
+                            <button class="response-btn" data-response="rate-hesitant">
+                                <i data-feather="x"></i>Won't Share Rate
+                            </button>
+                            <button class="response-btn" data-response="rate-high">
+                                <i data-feather="alert-triangle"></i>High Rate
+                            </button>
+                        </div>
+                        <div class="verification-response" id="shares-current-response">
+                            <p>"Thank you for sharing that. Based on what you're currently paying, I'm confident we can save you money while providing better coverage. Let me show you our best rates..."</p>
+                            <div class="tip">
+                                <i data-feather="zap"></i>
+                                <span>Move quickly to quote presentation while rates are fresh in their mind</span>
+                            </div>
+                        </div>
+                        <div class="verification-response" id="rate-hesitant-response">
+                            <p>"I understand your hesitation. I ask because it helps me ensure I can find you better coverage at a better rate. Would you be interested if I could get you covered for less than [estimate based on area averages] per month?"</p>
+                        </div>
+                        <div class="verification-response" id="rate-high-response">
+                            <p>"I hear your frustration with those high rates. That's exactly why I want to help. Many of our customers who switched from [their company] are saving hundreds per year. Let me show you what we can do..."</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Quote Presentation -->
+<!-- Quote Presentation Section -->
             <div class="script-flow">
-                <div class="flow-step">
-                    <h3><i data-feather="pie-chart"></i>Quote Presentation</h3>
-                    <div class="script-text">
-                        "Based on the information you've shared, I can get you covered with better protection for [quote amount] per month. This includes [key benefits]. When would you like to get started?"
-                    </div>
-                    <div class="quick-responses">
-                        <button class="response-btn" onclick="showResponse('quote-compare')">Compare Features</button>
-                        <button class="response-btn" onclick="showResponse('quote-benefits')">Highlight Benefits</button>
-                        <button class="response-btn" onclick="showResponse('quote-immediate')">Immediate Close</button>
+                <h3><i data-feather="pie-chart"></i>Quote Presentation</h3>
+                
+                <div class="verification-item">
+                    <div class="verify-content">
+                        <strong>Rate Presentation</strong>
+                        <p>"Based on the information you've shared, I can get you covered with better protection for [quote amount] per month. This includes [key benefits]. When would you like to get started?"</p>
+                        <div class="quick-responses">
+                            <button class="response-btn" data-response="quote-positive">
+                                <i data-feather="check"></i>Positive Response
+                            </button>
+                            <button class="response-btn" data-response="quote-hesitant">
+                                <i data-feather="help-circle"></i>Hesitant
+                            </button>
+                            <button class="response-btn" data-response="quote-high">
+                                <i data-feather="x"></i>Quote Too High
+                            </button>
+                        </div>
+                        <div class="verification-response" id="quote-positive-response">
+                            <p>"Excellent! Let's get your better rate started right now. Would you prefer to set up your payment with your bank account for additional savings, or would you like to use a credit card?"</p>
+                        </div>
+                        <div class="verification-response" id="quote-hesitant-response">
+                            <p>"I understand wanting to think it through. What specific aspect of the coverage would you like me to explain further? Many customers appreciate knowing they can start saving today and still have 30 days to review everything."</p>
+                        </div>
+                        <div class="verification-response" id="quote-high-response">
+                            <p>"I understand cost is important. Let's look at your coverages and see if we can adjust anything to better fit your budget while still maintaining solid protection. Would that be helpful?"</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Closing Section -->
-            <div class="closing-section">
-                <h3><i data-feather="check-circle"></i>Closing</h3>
-                <div class="script-text">
-                    "Great news! We can get this better rate started today and help you cancel your higher rate. Would you prefer to set up your payment with your bank account or card?"
-                </div>
-                <div class="closing-options">
-                    <button class="closing-btn" onclick="showCloseScript('bank')">Bank Account</button>
-                    <button class="closing-btn" onclick="showCloseScript('card')">Credit Card</button>
-                    <button class="closing-btn" onclick="showCloseScript('schedule')">Schedule Later</button>
+                <!-- Closing Section -->
+                <div class="closing-section">
+                    <h3><i data-feather="check-circle"></i>Closing & Payment</h3>
+                    <div class="closing-text">
+                        "Great news! We can get this better rate started today. Would you prefer to set up your payment with your bank account or card?"
+                    </div>
+                    <div class="closing-options">
+                        <button class="closing-btn" data-close="bank">
+                            <i data-feather="credit-card"></i>Bank Account
+                        </button>
+                        <button class="closing-btn" data-close="card">
+                            <i data-feather="credit-card"></i>Credit Card
+                        </button>
+                        <button class="closing-btn" data-close="schedule">
+                            <i data-feather="calendar"></i>Schedule Later
+                        </button>
+                    </div>
+                    <div class="closing-response" id="bank-close-response">
+                        <div class="closing-step-content">
+                            <h4 class="closing-step-title">Bank Account Setup</h4>
+                            <p>"Great choice! Setting up automatic payments with your bank account also qualifies you for our paid-in-full discount. What's your routing and account number?"</p>
+                        </div>
+                    </div>
+                    <div class="closing-response" id="card-close-response">
+                        <div class="closing-step-content">
+                            <h4 class="closing-step-title">Credit Card Setup</h4>
+                            <p>"Perfect! I can help you set that up right now. Which card would you like to use? We accept all major credit and debit cards."</p>
+                        </div>
+                    </div>
+                    <div class="closing-response" id="schedule-close-response">
+                        <div class="closing-step-content">
+                            <h4 class="closing-step-title">Schedule Payment</h4>
+                            <p>"I understand. Keep in mind that rates can change daily. Would you feel more comfortable if we got everything set up now and scheduled your first payment for [future date]?"</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -463,56 +854,89 @@
                 <button class="tab-btn" data-tab="price">Price</button>
                 <button class="tab-btn" data-tab="timing">Timing</button>
                 <button class="tab-btn" data-tab="hesitation">Hesitation</button>
-                <button class="tab-btn" data-tab="verification">Verification</button>
+                <button class="tab-btn" data-tab="competition">Competition</button>
             </div>
 
             <div class="objections-list">
-                <!-- Top 10 Objections -->
-                <div class="objection-card">
+                <!-- TOP 10 OBJECTIONS -->
+
+                <!-- Objection 1: Limited Time -->
+                <div class="objection-card" data-category="top10">
                     <div class="objection-title">
                         <i data-feather="clock"></i>
                         <span>"I only have a few minutes"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"Perfect! I actually only have [less time than they mentioned], so let's get started on finding you a better rate right away. Can you verify your address for me?"</p>
+                        <div class="response-text">
+                            <p>"Perfect! I actually only have [less time than they mentioned], so let's get started on finding you a better rate right away. Can you verify your address for me?"</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If still hesitant:</span>
+                            </div>
+                            <p>"I understand your time is valuable. Let me just quickly show you your savings - it'll only take 2 minutes. Would that be okay?"</p>
+                        </div>
                         <div class="tip-box">
                             <i data-feather="zap"></i>
                             <span>Take control by mentioning less time than they have</span>
                         </div>
                     </div>
                 </div>
-
-                <div class="objection-card">
+<!-- Objection 2: Need to Think About It -->
+                <div class="objection-card" data-category="top10">
                     <div class="objection-title">
-                        <i data-feather="shield"></i>
-                        <span>"I don't want to share my information"</span>
+                        <i data-feather="refresh"></i>
+                        <span>"I need to think about it"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I completely understand your concern about privacy. As a licensed agent, I'm required by law to verify this information to provide you with an accurate quote. This protects both you and ensures you get the best possible rate. Would that be okay?"</p>
+                        <div class="response-text">
+                            <p>"I understand wanting to make a careful decision. What specific aspect of the coverage would you like to think about? I'm here to answer any questions and make sure you have all the information you need."</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If they mention specific concern:</span>
+                            </div>
+                            <p>"Let me address that specifically... [Answer concern]. Since rates can change daily, would you feel comfortable moving forward if I could address that concern right now?"</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If still thinking:</span>
+                            </div>
+                            <p>"While you're thinking about it, you're paying more with your current company. We can get the better rate started today and you'll have 30 days to review everything. Would you like to start saving now?"</p>
+                        </div>
+                        <div class="tip-box">
+                            <i data-feather="zap"></i>
+                            <span>Always isolate the real concern and address it specifically</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="objection-card">
-                    <div class="objection-title">
-                        <i data-feather="dollar-sign"></i>
-                        <span>"I'm happy with my current rate"</span>
-                    </div>
-                    <div class="objection-response">
-                        <p>"That's great! Many of our current customers said the same thing before saving [average savings amount] with us. Since I have you on the phone, let me at least show you what we can offer - it only takes a few minutes, and you might be surprised by the savings."</p>
-                    </div>
-                </div>
-<!-- Continuing with objection cards -->
-
-                <div class="objection-card">
+                <!-- Objection 3: Need to Talk to Spouse -->
+                <div class="objection-card" data-category="top10">
                     <div class="objection-title">
                         <i data-feather="users"></i>
                         <span>"I need to talk to my spouse"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I understand wanting to discuss this with your spouse. Many of our customers say the same thing until they see how much they could save. Let me get you the quote now - that way you'll have specific numbers to discuss. If your spouse has any questions, I can talk to both of you. What's your current rate so I can show you the savings?"</p>
+                        <div class="response-text">
+                            <p>"I completely understand wanting to discuss this with your spouse. Many of our customers say the same thing until they see how much they could save. Let me get you the quote now - that way you'll have specific numbers to discuss. If your spouse has any questions, I can talk to both of you. What's your current rate so I can show you the savings?"</p>
+                        </div>
                         <div class="follow-up">
-                            <p>If still resistant:</p>
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>Alternative approach:</span>
+                            </div>
                             <p>"Would it be easier if we got your spouse on a three-way call right now? That way I can answer any questions immediately."</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If still resistant:</span>
+                            </div>
+                            <p>"Let me ask you this - if I can show you savings of [X] amount per month, would that be worth a quick conversation with your spouse tonight?"</p>
                         </div>
                         <div class="tip-box">
                             <i data-feather="zap"></i>
@@ -521,34 +945,76 @@
                     </div>
                 </div>
 
-                <div class="objection-card">
+                <!-- Objection 4: Send Me the Quote -->
+                <div class="objection-card" data-category="top10">
                     <div class="objection-title">
-                        <i data-feather="dollar-sign"></i>
-                        <span>"I won't share my current rate"</span>
+                        <i data-feather="mail"></i>
+                        <span>"Just send me the quote"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I understand your hesitation. I'm not asking to be nosy - knowing your current rate helps me ensure I'm offering you better coverage at a better price. Just like you wouldn't want to pay more for the same groceries, I want to make sure I'm saving you money. Can you at least tell me if you're paying more or less than $150 per month?"</p>
+                        <div class="response-text">
+                            <p>"I understand wanting to see everything in writing. Insurance rates change frequently, and I want to make sure you get the best rate possible. Let me quote you right now while I have these rates available. It only takes a few minutes, and I can still email you everything we discuss. Would that be fair?"</p>
+                        </div>
                         <div class="follow-up">
-                            <p>Alternative approach:</p>
-                            <p>"Even without knowing your current rate, I'm confident we can save you money. Would you be interested if I could get you full coverage for less than [amount] per month?"</p>
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If still insisting on email:</span>
+                            </div>
+                            <p>"I'll tell you what - let me at least show you the rate while we're on the phone. If you want to think about it, I'll email you everything we discuss. That way, you'll have all the information you need to make a decision. Sound good?"</p>
                         </div>
                         <div class="tip-box">
                             <i data-feather="zap"></i>
-                            <span>Use bracketing technique to get a range if not specific amount</span>
+                            <span>Create urgency around current rates while offering to still send information</span>
+                        </div>
+                    </div>
+                </div>
+<!-- Objection 5: Price is Too High -->
+                <div class="objection-card" data-category="top10">
+                    <div class="objection-title">
+                        <i data-feather="dollar-sign"></i>
+                        <span>"Your price is too high"</span>
+                    </div>
+                    <div class="objection-response">
+                        <div class="response-text">
+                            <p>"I understand price is important. Could you help me understand what price point you're comparing to? Sometimes when we look at the coverage levels and available discounts, you might actually be getting more protection for your money."</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>After they share:</span>
+                            </div>
+                            <p>"Let me look at a few more discounts. Are you a homeowner? Do you have any other vehicles we could bundle? Multi-policy discounts often make a big difference."</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If still too high:</span>
+                            </div>
+                            <p>"We can also look at adjusting some coverage options or deductibles to find a sweet spot that gives you good protection at a better price. What monthly payment would work best for your budget?"</p>
+                        </div>
+                        <div class="tip-box">
+                            <i data-feather="zap"></i>
+                            <span>Always focus on value and coverage rather than just price</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="objection-card">
+                <!-- Objection 6: Currently in 6-Month Policy -->
+                <div class="objection-card" data-category="top10">
                     <div class="objection-title">
-                        <i data-feather="clock"></i>
+                        <i data-feather="calendar"></i>
                         <span>"I'm still in my six-month policy"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"Actually, you can switch insurance at any time - you're never locked in. When you switch to Allstate, we'll help you cancel your old policy and you'll get a refund for any unused premium. The sooner you switch, the sooner you start saving. Would you like to see how much you could save right now?"</p>
+                        <div class="response-text">
+                            <p>"Actually, you can switch insurance at any time - you're never locked in. When you switch to Allstate, we'll help you cancel your old policy and you'll get a refund for any unused premium. The sooner you switch, the sooner you start saving. Would you like to see how much you could save right now?"</p>
+                        </div>
                         <div class="follow-up">
-                            <p>If concerned about refund:</p>
-                            <p>"Your current company is required by law to refund unused premium. We'll help handle the cancellation to make sure you get your refund."</p>
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If concerned about refund:</span>
+                            </div>
+                            <p>"Your current company is required by law to refund any unused premium. We'll help handle the cancellation to make sure you get your refund. Meanwhile, you'll be paying less with us starting today."</p>
                         </div>
                         <div class="tip-box">
                             <i data-feather="zap"></i>
@@ -557,33 +1023,21 @@
                     </div>
                 </div>
 
-                <div class="objection-card">
-                    <div class="objection-title">
-                        <i data-feather="x-circle"></i>
-                        <span>"Just send me the quote"</span>
-                    </div>
-                    <div class="objection-response">
-                        <p>"I can definitely send you the quote, but insurance rates change frequently. Let me get you quoted right now while I have these rates available. It only takes a few minutes, and I can answer any questions immediately. What's your current rate so I can make sure I'm saving you money?"</p>
-                        <div class="follow-up">
-                            <p>If still wanting email:</p>
-                            <p>"I'll tell you what - let me at least show you the rate while we're on the phone. If you want to think about it, I'll email you everything we discuss. Fair enough?"</p>
-                        </div>
-                        <div class="tip-box">
-                            <i data-feather="zap"></i>
-                            <span>Create urgency around current rates while offering to still send information</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="objection-card">
+                <!-- Objection 7: Claim on Record -->
+                <div class="objection-card" data-category="top10">
                     <div class="objection-title">
                         <i data-feather="alert-triangle"></i>
                         <span>"I have a claim on my record"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"Many of our customers have had claims - that's what insurance is for! In fact, we specialize in helping people with claims get better rates. What kind of claim was it and when did it happen? This helps me find the best discounts for your situation."</p>
+                        <div class="response-text">
+                            <p>"Many of our customers have had claims - that's what insurance is for! In fact, we specialize in helping people with claims get better rates. What kind of claim was it and when did it happen? This helps me find the best discounts for your situation."</p>
+                        </div>
                         <div class="follow-up">
-                            <p>After they share:</p>
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>After they share:</span>
+                            </div>
                             <p>"Thanks for sharing that. The good news is, claims impact your rate less over time, and we have several discounts that could help offset any impact. Let me show you what we can do."</p>
                         </div>
                         <div class="tip-box">
@@ -593,18 +1047,29 @@
                     </div>
                 </div>
 
-                <div class="objection-card">
+                <!-- Objection 8: Won't Share Information -->
+                <div class="objection-card" data-category="top10">
                     <div class="objection-title">
-                        <i data-feather="shield-off"></i>
-                        <span>"I don't want to share personal information"</span>
+                        <i data-feather="lock"></i>
+                        <span>"I won't share my personal information"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I completely understand your concern about privacy. As a licensed agent, I'm bound by strict privacy laws and use this information solely to ensure you get all available discounts. Your information is protected by law. Which piece of information concerns you most?"</p>
+                        <div class="response-text">
+                            <p>"I completely understand your concern about privacy. As a licensed agent, I'm bound by strict privacy laws and use this information solely to ensure you get all available discounts. Your information is protected by law. Which piece of information concerns you most?"</p>
+                        </div>
                         <div class="follow-up">
-                            <p>If concerned about DOB:</p>
-                            <p>"Your date of birth helps us apply age-related discounts and ensure accurate coverage. We can't give you the best rate without it."</p>
-                            <p>If concerned about address:</p>
-                            <p>"Your address helps us apply regional discounts and assess local factors that could save you money. I can't give you an accurate quote without it."</p>
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If concerned about DOB:</span>
+                            </div>
+                            <p>"Your date of birth helps us apply age-related discounts and ensure accurate coverage. We can't give you the best rate without it. This information is protected by federal privacy laws."</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If concerned about address:</span>
+                            </div>
+                            <p>"Your address helps us apply regional discounts and assess local factors that could save you money. I can't give you an accurate quote without it. Would you be more comfortable if I explained our privacy policy?"</p>
                         </div>
                         <div class="tip-box">
                             <i data-feather="zap"></i>
@@ -612,16 +1077,21 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="objection-card">
+<!-- Objection 9: I'll Call You Back -->
+                <div class="objection-card" data-category="top10">
                     <div class="objection-title">
-                        <i data-feather="clock"></i>
+                        <i data-feather="phone-missed"></i>
                         <span>"I'll call you back"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I understand wanting to call back, but these rates change frequently, and I want to make sure you get the best rate possible. Let me ask you this - if I could save you [amount] per month on better coverage, would you want to know that now or risk losing that rate?"</p>
+                        <div class="response-text">
+                            <p>"I understand wanting to call back, but these rates change frequently, and I want to make sure you get the best rate possible. Let me ask you this - if I could save you [amount] per month on better coverage, would you want to know that now or risk losing that rate?"</p>
+                        </div>
                         <div class="follow-up">
-                            <p>If still wanting to call back:</p>
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If still wanting to call back:</span>
+                            </div>
                             <p>"I've got your information pulled up right now. It'll take longer to go through everything if you call back. Since we're already talking, let me at least show you the savings available right now - it only takes a few minutes."</p>
                         </div>
                         <div class="tip-box">
@@ -631,88 +1101,312 @@
                     </div>
                 </div>
 
-                <div class="objection-card">
+                <!-- Objection 10: Happy with Current Rate -->
+                <div class="objection-card" data-category="top10">
+                    <div class="objection-title">
+                        <i data-feather="smile"></i>
+                        <span>"I'm happy with my current rate"</span>
+                    </div>
+                    <div class="objection-response">
+                        <div class="response-text">
+                            <p>"That's great that you're satisfied! Many of our current customers said the same thing before saving an average of 20% with us. Since I have you on the phone, let me at least show you what we can offer - it only takes a few minutes, and you might be surprised by the savings while getting better coverage."</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If still resistant:</span>
+                            </div>
+                            <p>"Just out of curiosity, what would you consider to be a significant enough savings to make a change? Let me see if I can meet or exceed that number."</p>
+                        </div>
+                        <div class="tip-box">
+                            <i data-feather="zap"></i>
+                            <span>Turn satisfaction into curiosity about potential savings</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PRICE CATEGORY OBJECTIONS -->
+                <div class="objection-card" data-category="price">
                     <div class="objection-title">
                         <i data-feather="trending-up"></i>
-                        <span>"Your price is too high"</span>
+                        <span>"Your deductible is too high"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I understand price is important. Could you help me understand what price point you're comparing to? Sometimes when we look at the coverage levels and discounts available, you might actually be getting more protection for your money."</p>
-                        <div class="follow-up">
-                            <p>After they share:</p>
-                            <p>"Let me look at adding a few more discounts. Are you a homeowner? Do you have any other vehicles we could bundle? Multi-policy discounts often make a big difference."</p>
-                            <p>If still too high:</p>
-                            <p>"We can also look at adjusting some coverage options or deductibles to find a sweet spot that gives you good protection at a better price. What monthly payment would work best for your budget?"</p>
+                        <div class="response-text">
+                            <p>"I understand your concern about the deductible. We actually have flexibility here. While a higher deductible lowers your monthly payment, we can definitely look at lower deductible options. What amount would you be comfortable with in case of a claim?"</p>
                         </div>
-                        <div class="tip-box">
-                            <i data-feather="zap"></i>
-                            <span>Focus on value and coverage rather than just price</span>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>Balance explanation:</span>
+                            </div>
+                            <p>"Let me show you how adjusting the deductible affects your monthly payment. Then you can decide which balance works best for your budget."</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="objection-card">
+                <div class="objection-card" data-category="price">
                     <div class="objection-title">
-                        <i data-feather="repeat"></i>
-                        <span>"I need to think about it"</span>
+                        <i data-feather="dollar-sign"></i>
+                        <span>"Can't afford the down payment"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I understand wanting to think it over. What specific aspect of the coverage would you like to think about? I'm here to answer any questions and make sure you have all the information you need to make a good decision."</p>
-                        <div class="follow-up">
-                            <p>After they share concern:</p>
-                            <p>"Let me address that specifically... [Answer concern]. Since rates can change daily, would you feel comfortable moving forward if I could address that concern right now?"</p>
-                            <p>If still thinking:</p>
-                            <p>"While you're thinking about it, you're paying more with your current company. We can get the better rate started today and you'll have 30 days to review everything. Would you like to start saving now?"</p>
+                        <div class="response-text">
+                            <p>"I understand that up-front costs can be challenging. We have several flexible payment options. Would you be more comfortable with a smaller down payment spread across your first few months? We can also look at our special first-time customer programs."</p>
                         </div>
                         <div class="tip-box">
                             <i data-feather="zap"></i>
-                            <span>Isolate the real concern and address it specifically</span>
+                            <span>Focus on flexibility and payment solutions</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- Advanced Objection Scenarios -->
-                <div class="objection-card">
+<!-- TIMING CATEGORY OBJECTIONS -->
+                <div class="objection-card" data-category="timing">
                     <div class="objection-title">
-                        <i data-feather="alert-circle"></i>
-                        <span>"I've never heard of switching mid-policy"</span>
+                        <i data-feather="clock"></i>
+                        <span>"Need to wait for my renewal"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"Actually, people switch mid-policy all the time - it's completely normal. Insurance companies are required by law to give you a refund for any unused premium. We'll even help you cancel your old policy and make sure you get your refund. The most important question is: why keep paying higher rates when you could start saving today?"</p>
+                        <div class="response-text">
+                            <p>"I hear this often, but actually, you don't need to wait for renewal to switch and save. Insurance can be canceled and started anytime. Your current company is required by law to refund any unused premium. How much are you currently paying monthly?"</p>
+                        </div>
                         <div class="follow-up">
-                            <p>If concerned about process:</p>
-                            <p>"We make it simple: once you start your policy with us, we'll guide you through cancelling your old policy. You'll typically receive your refund within 2-3 weeks. Meanwhile, you'll be paying less for better coverage. Ready to get started?"</p>
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If concerned about cancellation:</span>
+                            </div>
+                            <p>"We'll help handle the cancellation process completely. Every day you wait is another day you're paying more than you need to. Would you like to see how much you could save starting today?"</p>
                         </div>
                         <div class="tip-box">
                             <i data-feather="zap"></i>
-                            <span>Emphasize the normality and simplicity of switching</span>
+                            <span>Calculate daily savings they're missing by waiting</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Strong Closing Rebuttals -->
-                <div class="objection-card closing-specific">
+                <div class="objection-card" data-category="timing">
                     <div class="objection-title">
-                        <i data-feather="check-circle"></i>
-                        <span>Closing - "Not ready to decide"</span>
+                        <i data-feather="calendar"></i>
+                        <span>"Want to wait until next month"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I understand wanting to be sure about your decision. Let me ask you this: when is your next payment due with your current company? [Wait for response] Great - we can get you started with the better rate today, and you'll have until that next payment to fully review everything. You've got nothing to lose and [savings amount] per month to gain. Would you prefer to set this up with your bank account or card?"</p>
-                        <div class="follow-up">
-                            <p>If still hesitant:</p>
-                            <p>"What's holding you back from saving money today? Is there something specific about the coverage you'd like me to explain further?"</p>
+                        <div class="response-text">
+                            <p>"I understand wanting to wait, but insurance rates can change daily. Let's lock in this rate today, and we can set your payment to start next month. That way you're guaranteed today's savings. Would that work better for you?"</p>
                         </div>
-                        <div class="tip-box">
-                            <i data-feather="zap"></i>
-                            <span>Use assumed close and tie to their payment date</span>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>If budget is the concern:</span>
+                            </div>
+                            <p>"We can also look at our flexible payment options. Many customers save enough with us to offset any overlapping payments during the switch. What date would work best for your first payment?"</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- End of objection cards -->
+                <!-- HESITATION CATEGORY OBJECTIONS -->
+                <div class="objection-card" data-category="hesitation">
+                    <div class="objection-title">
+                        <i data-feather="help-circle"></i>
+                        <span>"Not sure about switching companies"</span>
+                    </div>
+                    <div class="objection-response">
+                        <div class="response-text">
+                            <p>"I understand that changing insurance companies is a big decision. Let me ask you this - what's most important to you in an insurance company? I'd like to show you how Allstate excels in those areas."</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>Build confidence:</span>
+                            </div>
+                            <p>"Allstate has been protecting customers for over 90 years. We have a 97% claim satisfaction rate, and I'm your local agent - always here when you need us. Plus, you get a 30-day look at your policy. What concerns could I address about making the switch?"</p>
+                        </div>
+                        <div class="tip-box">
+                            <i data-feather="zap"></i>
+                            <span>Focus on stability, service, and satisfaction guarantee</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="objection-card" data-category="hesitation">
+                    <div class="objection-title">
+                        <i data-feather="shield-off"></i>
+                        <span>"Worried about coverage gaps"</span>
+                    </div>
+                    <div class="objection-response">
+                        <div class="response-text">
+                            <p>"That's a great concern to raise. We specifically time your new policy to start before canceling your old one, ensuring zero gaps in coverage. Would you like me to explain exactly how we handle the transition?"</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>Detailed explanation:</span>
+                            </div>
+                            <p>"We'll start your new policy first, provide you with proof of insurance, then help you cancel your old policy. This ensures you're fully covered throughout the entire process. We can even handle the cancellation for you. Would that give you peace of mind?"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COMPETITION CATEGORY OBJECTIONS -->
+                <div class="objection-card" data-category="competition">
+                    <div class="objection-title">
+                        <i data-feather="users"></i>
+                        <span>"Getting quotes from other companies"</span>
+                    </div>
+                    <div class="objection-response">
+                        <div class="response-text">
+                            <p>"I respect doing your research. What specific features are most important in your comparison? I can show you how Allstate excels in those areas, plus our unique benefits that others might not offer."</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>Competitive advantage:</span>
+                            </div>
+                            <p>"While you're comparing, let me lock in today's rate for you. Rates change frequently, and this way you'll have a guaranteed option with all the savings we discussed. There's no obligation, but you'll have this rate secured while you compare. Sound fair?"</p>
+                        </div>
+                        <div class="tip-box">
+                            <i data-feather="zap"></i>
+                            <span>Create urgency while respecting their process</span>
+                        </div>
+                    </div>
+                </div>
+<!-- Additional Competition Objections -->
+                <div class="objection-card" data-category="competition">
+                    <div class="objection-title">
+                        <i data-feather="thumbs-down"></i>
+                        <span>"Heard bad things about Allstate"</span>
+                    </div>
+                    <div class="objection-response">
+                        <div class="response-text">
+                            <p>"I appreciate you sharing that concern. Could you tell me specifically what you've heard? I'd like to address those points directly and share our current customer satisfaction ratings and claims processing statistics."</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>Share statistics:</span>
+                            </div>
+                            <p>"Allstate has a 97% claims satisfaction rate, and we've been protecting customers for over 90 years. Plus, I'm your local agent, always here to help personally. Would you like to hear about our specific guarantees?"</p>
+                        </div>
+                        <div class="tip-box">
+                            <i data-feather="zap"></i>
+                            <span>Use specific numbers and personal service to build confidence</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="objection-card" data-category="competition">
+                    <div class="objection-title">
+                        <i data-feather="star"></i>
+                        <span>"Current company's rewards program"</span>
+                    </div>
+                    <div class="objection-response">
+                        <div class="response-text">
+                            <p>"I understand valuing reward programs. Let me show you Allstate's Drivewise program, which offers immediate rewards plus safe driving bonuses. Plus, the money you save monthly with us often exceeds annual rewards from other companies. What rewards are most important to you?"</p>
+                        </div>
+                        <div class="follow-up">
+                            <div class="follow-up-title">
+                                <i data-feather="corner-down-right"></i>
+                                <span>Value comparison:</span>
+                            </div>
+                            <p>"If you're saving [amount] monthly with us, that's [amount*12] annually - likely more than your current rewards. Plus, you'll still earn rewards with our program. Would you like to hear more about our rewards structure?"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complete Script Sections -->
+                <div class="full-script-section">
+                    <h3>Complete Call Flow</h3>
+                    
+                    <div class="script-phase">
+                        <h4>1. Introduction Phase</h4>
+                        <div class="script-text">
+                            "Hi [Name], this is [Agent Name], a licensed insurance agent with Allstate. I'm following up on your request for auto insurance information. Is this still a good time to talk?"
+                        </div>
+                        <div class="response-options">
+                            <p>If Yes: Move to verification</p>
+                            <p>If No: "When would be a better time for us to talk about saving you money on your insurance?"</p>
+                        </div>
+                    </div>
+
+                    <div class="script-phase">
+                        <h4>2. Verification Phase</h4>
+                        <div class="script-text">
+                            "Before I get you quoted for savings, I need to verify a few quick details. For security purposes, could you confirm..."
+                        </div>
+                        <ul class="verification-checklist">
+                            <li>Full name</li>
+                            <li>Address (transition to homeowner question)</li>
+                            <li>Date of birth (for accurate discounts)</li>
+                            <li>Vehicle information</li>
+                        </ul>
+                    </div>
+
+                    <div class="script-phase">
+                        <h4>3. Current Insurance Investigation</h4>
+                        <div class="script-text">
+                            "To make sure I get you the best savings possible..."
+                        </div>
+                        <ul class="investigation-questions">
+                            <li>"Who are you currently insured with?"</li>
+                            <li>"What's your typical monthly payment?"</li>
+                            <li>"When is your next payment due?"</li>
+                            <li>"What aspects of your current coverage would you like to improve?"</li>
+                        </ul>
+                    </div>
+
+                    <div class="script-phase">
+                        <h4>4. Quote Presentation</h4>
+                        <div class="script-text">
+                            "Based on what you've shared, I can get you covered with better protection for [amount] per month. This includes..."
+                        </div>
+                        <ul class="benefits-list">
+                            <li>Comprehensive coverage details</li>
+                            <li>Available discounts applied</li>
+                            <li>Additional protection options</li>
+                            <li>Bundle opportunities</li>
+                        </ul>
+                    </div>
+
+                    <div class="script-phase">
+                        <h4>5. Close and Payment</h4>
+                        <div class="script-text">
+                            "Great news! We can get this better rate started today and help you cancel your higher rate. Would you prefer to set up your payment with bank account for additional savings, or would you like to use a credit card?"
+                        </div>
+                        <div class="closing-options">
+                            <div class="payment-option">
+                                <h5>Bank Account</h5>
+                                <p>"Setting up automatic payments with your bank account qualifies you for our paid-in-full discount..."</p>
+                            </div>
+                            <div class="payment-option">
+                                <h5>Credit Card</h5>
+                                <p>"We can set that up right now with any major credit or debit card..."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Post-Sale Process -->
+                    <div class="script-phase">
+                        <h4>6. Next Steps</h4>
+                        <div class="next-steps-list">
+                            <div class="step">
+                                <h5>Policy Confirmation</h5>
+                                <p>"You'll receive your policy documents via email within the next hour..."</p>
+                            </div>
+                            <div class="step">
+                                <h5>Old Policy Cancellation</h5>
+                                <p>"We'll help you cancel your old policy to ensure no overlap in payments..."</p>
+                            </div>
+                            <div class="step">
+                                <h5>Welcome Package</h5>
+                                <p>"Your welcome package will arrive in 5-7 business days..."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
+</body>
 <script>
     // Initialize everything when the document is ready
     document.addEventListener('DOMContentLoaded', function() {
@@ -946,3 +1640,4 @@
     window.showCloseScript = showCloseScript;
     window.handleTimeObjection = handleTimeObjection;
 </script>
+</html>
