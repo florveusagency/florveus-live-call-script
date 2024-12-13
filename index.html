@@ -7,21 +7,52 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.1/feather.min.js"></script>
     <style>
         :root {
-            --primary: #003087;  /* Allstate Blue */
-            --secondary: #FFD100;  /* Allstate Yellow */
-            --dark: #1A1A1A;
-            --light: #FFFFFF;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-        }
+    --primary: #003087;  /* Allstate Blue */
+    --primary-dark: #002266;
+    --primary-light: #004db3;
+    --secondary: #FFD100;  /* Allstate Yellow */
+    --secondary-dark: #e6bc00;
+    --secondary-light: #ffdb4d;
+    --dark: #1A1A1A;
+    --light: #FFFFFF;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    
+    /* Ensure text colors are explicitly set */
+    color-scheme: light;
+    color: var(--light); /* Default text color */
+}
+
+body {
+    background-color: var(--light);
+    color: var(--dark); /* Ensure body text is dark */
+}
+
+/* Specific sections can override as needed */
+.script-area, 
+.script-flow, 
+.verification-section {
+    color: var(--dark);
+}
+
+.closing-section, 
+.objections-panel {
+    color: var(--light);
+}
+
+.script-text, 
+.verify-content,
+.verification-item p {
+    color: var(--dark);
+}
 
         * {
             margin: 0;
