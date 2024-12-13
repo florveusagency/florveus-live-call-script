@@ -770,39 +770,98 @@
     }
 
     function showResponse(responseId) {
-        const responseMap = {
-            // Existing responses...
-            'vehicle-current': {
-                text: "Perfect. And do you anticipate any changes to your vehicles in the next 6 months? I can help you adjust coverage for any new vehicles you might acquire.",
-                tip: "Proactively discuss future vehicle needs"
-            },
-            'vehicle-multiple': {
-                text: "Great! Multiple vehicles often qualify for multi-vehicle discounts. Tell me about the vehicles you want to cover, and I'll help you find the best bundled rate.",
-                tip: "Highlight potential savings with multiple vehicles"
-            }
-        };
+    const responseMap = {
+        // Verification Flow Responses
+        'name-yes': {
+            text: "Great! Let's continue with verifying your information to get you the best possible rate.",
+            tip: "Move quickly to next verification item"
+        },
+        'name-no': {
+            text: "I apologize for the error. Could you please provide your correct name for our records?",
+            tip: "Update information before proceeding"
+        },
+        'address-hesitant': {
+            text: "I understand your concern. As a licensed agent, I need this information to provide accurate quotes and ensure you get all available discounts. This information is protected by law.",
+            tip: "Emphasize security and necessity"
+        },
+        'address-bundle': {
+            text: "And is this address for a home you own? I ask because we could look at additional discounts if we bundle your auto and home insurance.",
+            tip: "Natural transition to bundling opportunity"
+        },
+        'dob-hesitant': {
+            text: "Your date of birth helps us apply age-related discounts and ensure accurate coverage. This information is protected by strict privacy laws.",
+            tip: "Connect to benefits and security"
+        },
+        'dob-why': {
+            text: "Good question. Your date of birth helps us: 1) Verify your identity for security, 2) Apply age-related discounts, and 3) Ensure accurate coverage based on your driving experience.",
+            tip: "Three clear reasons for requesting DOB"
+        },
+        'vehicle-current': {
+            text: "Perfect. And do you anticipate any changes to your vehicles in the next 6 months? I ask because we can easily add coverage for any new vehicles.",
+            tip: "Plan for future needs"
+        },
+        'vehicle-multiple': {
+            text: "Great! Multiple vehicles often qualify for multi-vehicle discounts. Tell me about the vehicles you want to cover, and I'll help you find the best bundled rate.",
+            tip: "Highlight potential savings with multiple vehicles"
+        },
 
-        const response = responseMap[responseId];
-        if (response) {
-            const tipBox = document.createElement('div');
-            tipBox.className = 'tip-box active';
-            tipBox.innerHTML = `
-                <i data-feather="zap"></i>
-                <div>
-                    <p>${response.text}</p>
-                    <small>${response.tip}</small>
-                </div>
-            `;
-            
-            document.querySelectorAll('.tip-box.active').forEach(box => box.remove());
-            
-            document.querySelector('.script-flow').appendChild(tipBox);
-            feather.replace();
-            
-            tipBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        // Current Insurance Discussion Responses
+        'rate-hesitant': {
+            text: "I understand your hesitation. I'm asking so I can make sure I beat your current rate. Would you be interested if I could save you money per month?",
+            tip: "Use bracketing technique to get a range"
+        },
+        'company-hesitant': {
+            text: "I understand your reluctance to share. Knowing your current provider helps me compare and potentially find you a better rate. Would you be comfortable sharing the type of coverage you currently have?",
+            tip: "Create curiosity about potential savings"
+        },
+        'rate-too-high': {
+            text: "I hear you. Many customers feel the same way before discovering significant savings. Let's explore options that could reduce your current rate.",
+            tip: "Show empathy and create opportunity"
+        },
+
+        // Quote Presentation Responses
+        'quote-compare': {
+            text: "Great question! Let me break down how our coverage compares to your current policy, highlighting the key differences and potential savings.",
+            tip: "Provide detailed, value-focused comparison"
+        },
+        'quote-benefits': {
+            text: "Our policy offers comprehensive protection with benefits like accident forgiveness, roadside assistance, and flexible payment options that go beyond just a low price.",
+            tip: "Emphasize value-added features"
+        },
+        'quote-immediate': {
+            text: "Absolutely! We can lock in these savings right now. Would you like to proceed with the coverage we've discussed?",
+            tip: "Create urgency and momentum"
         }
-    }
+    };
 
+    const response = responseMap[responseId];
+    if (response) {
+        const tipBox = document.createElement('div');
+        tipBox.className = 'tip-box active';
+        tipBox.innerHTML = `
+            <i data-feather="zap"></i>
+            <div>
+                <p>${response.text}</p>
+                <small>${response.tip}</small>
+            </div>
+        `;
+        
+        // Remove any existing active tip boxes
+        document.querySelectorAll('.tip-box.active').forEach(box => box.remove());
+        
+        // Add new tip box to the current script flow
+        const currentScriptFlow = document.querySelector('.script-flow:has(.quick-responses .response-btn[onclick*="' + responseId + '"])') || 
+                                   document.querySelector('.script-flow');
+        
+        currentScriptFlow.appendChild(tipBox);
+        feather.replace();
+        
+        // Scroll to tip box
+        tipBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } else {
+        console.log(`No response mapped for: ${responseId}`);
+    }
+}
     function showCloseScript(type) {
         const closeScripts = {
             'bank': {
