@@ -247,15 +247,15 @@
         }
 
         .objection-response {
-    display: none; /* Hidden by default */
-    margin-top: 0.5rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid var(--gray-200);
-}
+            display: none;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--gray-200);
+        }
 
-.objection-response.active {
-    display: block; /* Shown when active */
-}
+        .objection-response.active {
+            display: block;
+        }
 
         .tip-box {
             background: var(--gray-100);
@@ -756,29 +756,19 @@
     }
 
     function toggleObjection(card) {
-    const response = card.querySelector('.objection-response');
-    
-    if (response) {
+        const response = card.querySelector('.objection-response');
         const isVisible = response.classList.contains('active');
         
         // Hide all other responses
         document.querySelectorAll('.objection-response').forEach(r => {
             r.classList.remove('active');
         });
-        
-        // Show/hide the clicked card's response
+
+        // Show/hide clicked response
         if (!isVisible) {
             response.classList.add('active');
         }
     }
-}
-
-// Attach event listeners to all objection cards
-document.querySelectorAll('.objection-card').forEach(card => {
-    card.addEventListener('click', () => toggleObjection(card));
-});
-
-
 
     function switchTab(tabId) {
         // Update active tab button
