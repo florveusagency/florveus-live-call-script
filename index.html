@@ -757,21 +757,27 @@
 
     function toggleObjection(card) {
     const response = card.querySelector('.objection-response');
-    const isVisible = response.classList.contains('active');
     
-    // Hide all other responses
-    document.querySelectorAll('.objection-response').forEach(r => {
-        r.classList.remove('active');
-    });
-
-    // Toggle the clicked card's response visibility
-    if (!isVisible) {
-        response.classList.add('active');
-    } else {
-        response.classList.remove('active');
-        feather.replace();
+    if (response) {
+        const isVisible = response.classList.contains('active');
+        
+        // Hide all other responses
+        document.querySelectorAll('.objection-response').forEach(r => {
+            r.classList.remove('active');
+        });
+        
+        // Show/hide the clicked card's response
+        if (!isVisible) {
+            response.classList.add('active');
+        }
     }
 }
+
+// Attach event listeners to all objection cards
+document.querySelectorAll('.objection-card').forEach(card => {
+    card.addEventListener('click', () => toggleObjection(card));
+});
+
 
 
     function switchTab(tabId) {
