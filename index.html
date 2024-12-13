@@ -260,8 +260,8 @@ body {
 
 .objection-response {
     display: none;
-    margin-top: 0.5rem;
-    padding-top: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
     border-top: 1px solid var(--gray-200);
 }
 
@@ -873,8 +873,9 @@ body {
  <script>
 // Initialize everything when the document is ready
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Feather Icons
     feather.replace();
+    setupEventListeners();
+});
     
     // Set up initial event listeners
     setupEventListeners();
@@ -885,20 +886,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function setupEventListeners() {
     // Objection card clicks
-    setupObjectionsListeners();
+    document.querySelectorAll('.objection-card').forEach(card => {
+        card.addEventListener('click', function(event) {
+            // Prevent any other event propagation
+            event.stopPropagation();
 
-    // Tab navigation
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-    });
+            // Toggle the response for this specific card
+            const response = this.querySelector('.objection-response');
+            
+            // First, close all other responses
+            document.querySelectorAll('.objection-response').forEach(resp => {
+                if (resp !== response) {
+                    resp.classList.remove('active');
+                }
+            });
 
-    // Quick response buttons
-    document.querySelectorAll('.response-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent objection card from toggling
-            showResponse(btn.dataset.response);
+            // Then toggle the clicked card's response
+            if (response) {
+                response.classList.toggle('active');
+            }
         });
     });
+
 
     // Search functionality
     const searchInput = document.querySelector('.objections-search input');
@@ -909,26 +918,6 @@ function setupEventListeners() {
         btn.addEventListener('click', () => showCloseScript(btn.dataset.type));
     });
 }
-
-function setupObjectionsListeners() {
-    // Objection card click to toggle response
-    document.querySelectorAll('.objection-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-            // Prevent other click events from interfering
-            if (e.target.closest('.objection-response')) return;
-
-            // Toggle the response for this specific card
-            const response = card.querySelector('.objection-response');
-            
-            // Remove active class from all objection responses
-            document.querySelectorAll('.objection-response').forEach(resp => {
-                if (resp !== response) resp.classList.remove('active');
-            });
-
-            // Toggle the clicked card's response
-            response.classList.toggle('active');
-        });
-    });
 
     // Add listeners for additional buttons within objection cards
     document.querySelectorAll('.objection-card .quick-responses .response-btn').forEach(btn => {
