@@ -6,16 +6,18 @@
     <title>Live Transfer Script Navigator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.1/feather.min.js"></script>
     <style>
+        /* Logo Styling */
         .logo-container {
-    text-align: center; /* Center the logo horizontally */
-    margin-bottom: 1rem; /* Add space below the logo */
-}
+            text-align: center; /* Center the logo horizontally */
+            margin-bottom: 1rem; /* Add space below the logo */
+        }
 
-.logo {
-    max-width: 150px; /* Adjust size as needed */
-    height: auto; /* Maintain aspect ratio */
-}
+        .logo {
+            max-width: 150px; /* Adjust size as needed */
+            height: auto; /* Maintain aspect ratio */
+        }
 
+        /* Global Styles */
         :root {
             --primary: #003087;  /* Allstate Blue */
             --secondary: #FFD100;  /* Allstate Yellow */
@@ -40,15 +42,22 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
+        /* Adjusted Global Height Settings */
+        body, html {
+            height: auto; /* Allow dynamic height to fit all content */
+            min-height: 100vh; /* Ensure the page at least covers the full viewport height */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
         body {
             background-color: var(--light);
-            height: 100vh;
-            overflow: hidden;
         }
 
         .container {
             display: flex;
-            height: 100vh;
+            flex-direction: column; /* Stack content vertically */
+            min-height: 100%; /* Ensure container expands to fit content */
+            padding-bottom: 2rem; /* Add bottom padding to ensure content fits */
         }
 
         /* Main Script Area */
