@@ -757,19 +757,11 @@
     const response = card.querySelector('.objection-response');
     
     if (response) {
-        const isVisible = response.classList.contains('active');
-        
-        // Hide all other responses
-        document.querySelectorAll('.objection-response').forEach(r => {
-            r.classList.remove('active');
-        });
-        
-        // Show/hide the clicked card's response
-        if (!isVisible) {
-            response.classList.add('active');
-        }
+        response.classList.toggle('active');
+        console.log('Toggled active class:', response.classList.contains('active'));
     }
 }
+
 
 // Attach event listeners to all objection cards
 document.querySelectorAll('.objection-card').forEach(card => {
