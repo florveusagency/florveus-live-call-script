@@ -757,10 +757,14 @@
     const response = card.querySelector('.objection-response');
     
     if (response) {
-        response.classList.toggle('active');
-        console.log('Toggled active class:', response.classList.contains('active'));
+        if (response.style.display === 'block') {
+            response.style.display = 'none';
+        } else {
+            response.style.display = 'block';
+        }
     }
 }
+
 
 
     function switchTab(tabId) {
