@@ -246,16 +246,14 @@
             gap: 0.5rem;
         }
 
-        .objection-response {
-            display: none;
-            margin-top: 0.5rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid var(--gray-200);
-        }
+       .objection-response {
+    display: none; /* Hidden by default */
+}
 
-        .objection-response.active {
-            display: block;
-        }
+.objection-response.active {
+    display: block; /* Shown when active */
+}
+
 
         .tip-box {
             background: var(--gray-100);
@@ -761,10 +759,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const response = card.querySelector('.objection-response');
     
     if (response) {
-        response.classList.toggle('active');
-        console.log('Toggled active class:', response.classList.contains('active'));
+        // Hide all other responses
+        document.querySelectorAll('.objection-response').forEach(r => {
+            r.classList.remove('active'); // Remove active class from others
+        });
+
+        // Toggle the clicked card's response
+        response.classList.toggle('active'); // Add or remove active class
     }
 }
+
+// Attach event listeners to all objection cards
+document.querySelectorAll('.objection-card').forEach(card => {
+    card.addEventListener('click', () => toggleObjection(card));
+});
+
 
 
     function showResponse(responseId) {
