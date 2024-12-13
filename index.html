@@ -871,232 +871,351 @@ body {
         </div>
     </div>
  <script>
-    // Initialize everything when the document is ready
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Feather Icons
-        feather.replace();
-        
-        // Set up initial event listeners
-        setupEventListeners();
-        
-        // Show initial section
-        showSection('intro');
+// Initialize everything when the document is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Feather Icons
+    feather.replace();
+    
+    // Set up initial event listeners
+    setupEventListeners();
+    
+    // Show initial section
+    showSection('intro');
+});
+
+function setupEventListeners() {
+    // Objection card clicks
+    setupObjectionsListeners();
+
+    // Tab navigation
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
 
-    function setupEventListeners() {
-        // Objection card clicks
-        document.querySelectorAll('.objection-card').forEach(card => {
-            card.addEventListener('click', () => toggleObjection(card));
+    // Quick response buttons
+    document.querySelectorAll('.response-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent objection card from toggling
+            showResponse(btn.dataset.response);
         });
+    });
 
-        // Tab navigation
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-        });
+    // Search functionality
+    const searchInput = document.querySelector('.objections-search input');
+    searchInput.addEventListener('input', (e) => searchObjections(e.target.value));
 
-        // Quick response buttons
-        document.querySelectorAll('.response-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent objection card from toggling
-                showResponse(btn.dataset.response);
+    // Closing buttons
+    document.querySelectorAll('.closing-btn').forEach(btn => {
+        btn.addEventListener('click', () => showCloseScript(btn.dataset.type));
+    });
+}
+
+function setupObjectionsListeners() {
+    // Objection card click to toggle response
+    document.querySelectorAll('.objection-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            // Prevent other click events from interfering
+            if (e.target.closest('.objection-response')) return;
+
+            // Toggle the response for this specific card
+            const response = card.querySelector('.objection-response');
+            
+            // Remove active class from all objection responses
+            document.querySelectorAll('.objection-response').forEach(resp => {
+                if (resp !== response) resp.classList.remove('active');
             });
+
+            // Toggle the clicked card's response
+            response.classList.toggle('active');
         });
+    });
 
-        // Search functionality
-        const searchInput = document.querySelector('.objections-search input');
-        searchInput.addEventListener('input', (e) => searchObjections(e.target.value));
-
-        // Closing buttons
-        document.querySelectorAll('.closing-btn').forEach(btn => {
-            btn.addEventListener('click', () => showCloseScript(btn.dataset.type));
+    // Add listeners for additional buttons within objection cards
+    document.querySelectorAll('.objection-card .quick-responses .response-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent parent card from toggling
+            
+            const responseId = btn.getAttribute('data-response');
+            const card = btn.closest('.objection-card');
+            const responseContainer = card.querySelector('.objection-response');
+            
+            // Show the specific rebuttal
+            showObjectionResponse(responseId, responseContainer);
         });
-    }
+    });
+}
 
-    function toggleObjection(card) {
-    const response = card.querySelector('.objection-response');
-    
-    // Remove active class from all objection responses
+function switchTab(tabId) {
+    // Update active tab button
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tabId);
+    });
+
+    // Filter objections
+    const objections = document.querySelectorAll('.objection-card');
+    objections.forEach(obj => {
+        // Show all for top10, or filter by category
+        obj.style.display = (tabId === 'top10' || obj.dataset.category === tabId) ? 'block' : 'none';
+    });
+
+    // Reset any open responses
     document.querySelectorAll('.objection-response').forEach(resp => {
         resp.classList.remove('active');
     });
-
-    // Toggle the active class on the clicked card's response
-    response.classList.toggle('active');
 }
 
-    function switchTab(tabId) {
-        // Update active tab button
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.tab === tabId);
-        });
-
-        // Filter objections
-        const objections = document.querySelectorAll('.objection-card');
-        if (tabId === 'top10') {
-            objections.forEach((obj, index) => {
-                obj.style.display = index < 10 ? 'block' : 'none';
-            });
-        } else {
-            objections.forEach(obj => {
-                obj.style.display = obj.dataset.category === tabId ? 'block' : 'none';
-            });
+function showObjectionResponse(responseId, container) {
+    const responseMap = {
+        // Common objection responses
+        'time-limited': {
+            text: "I understand you're busy. I can get you a quick quote in just a few minutes. Shall we proceed?",
+            tip: "Emphasize efficiency and speed"
+        },
+        'privacy-concern': {
+            text: "I completely understand your privacy concerns. As a licensed agent, I'm bound by strict privacy laws. Your information is protected and used solely to provide you the best possible rate.",
+            tip: "Reassure about data protection"
+        },
+        'current-rate-happy': {
+            text: "Many customers were happy with their current rate until they saw how much they could save. Would you be interested in a quick comparison?",
+            tip: "Create curiosity about potential savings"
+        },
+        'need-spouse-consult': {
+            text: "Great idea to discuss with your spouse. I can provide a quote now that you can review together. Would that be helpful?",
+            tip: "Offer actionable next step"
+        },
+        'hesitant-about-switch': {
+            text: "I understand your hesitation. Let me walk you through how smooth and beneficial switching can be. What specific concerns do you have?",
+            tip: "Address underlying concerns"
+        },
+        'name-yes': {
+            text: "Great! Let's continue with verifying your information to get you the best possible rate.",
+            tip: "Move quickly to next verification item"
+        },
+        'name-no': {
+            text: "I apologize for the error. Could you please provide your correct name for our records?",
+            tip: "Update information before proceeding"
+        },
+        'address-hesitant': {
+            text: "I understand your concern. As a licensed agent, I need this information to provide accurate quotes and ensure you get all available discounts. This information is protected by law.",
+            tip: "Emphasize security and necessity"
+        },
+        'address-bundle': {
+            text: "And is this address for a home you own? I ask because we could look at additional discounts if we bundle your auto and home insurance.",
+            tip: "Natural transition to bundling opportunity"
+        },
+        'dob-hesitant': {
+            text: "Your date of birth helps us apply age-related discounts and ensure accurate coverage. This information is protected by strict privacy laws.",
+            tip: "Connect to benefits and security"
+        },
+        'dob-why': {
+            text: "Good question. Your date of birth helps us: 1) Verify your identity for security, 2) Apply age-related discounts, and 3) Ensure accurate coverage based on your driving experience.",
+            tip: "Three clear reasons for requesting DOB"
+        },
+        'rate-hesitant': {
+            text: "I understand your hesitation. I'm asking so I can make sure I beat your current rate. Would you be interested if I could save you $X per month?",
+            tip: "Use bracketing technique to get a range"
+        },
+        'vehicle-current': {
+            text: "Perfect. And do you anticipate any changes to your vehicles in the next 6 months? I ask because we can easily add coverage for any new vehicles.",
+            tip: "Plan for future needs"
         }
+    };
+
+    // If no specific response found, use a generic message
+    const response = responseMap[responseId] || {
+        text: "Thank you for sharing your concern. How can I help address this?",
+        tip: "Listen and find a solution"
+    };
+
+    // Create the response element
+    const responseElement = document.createElement('div');
+    responseElement.className = 'objection-follow-up';
+    responseElement.innerHTML = `
+        <p>${response.text}</p>
+        <div class="tip-box">
+            <i data-feather="zap"></i>
+            <span>${response.tip}</span>
+        </div>
+    `;
+
+    // Clear any existing follow-up
+    const existingFollowUp = container.querySelector('.objection-follow-up');
+    if (existingFollowUp) {
+        existingFollowUp.remove();
     }
 
-    function showResponse(responseId) {
-        const responseMap = {
-            'name-yes': {
-                text: "Great! Let's continue with verifying your information to get you the best possible rate.",
-                tip: "Move quickly to next verification item"
-            },
-            'name-no': {
-                text: "I apologize for the error. Could you please provide your correct name for our records?",
-                tip: "Update information before proceeding"
-            },
-            'address-hesitant': {
-                text: "I understand your concern. As a licensed agent, I need this information to provide accurate quotes and ensure you get all available discounts. This information is protected by law.",
-                tip: "Emphasize security and necessity"
-            },
-            'address-bundle': {
-                text: "And is this address for a home you own? I ask because we could look at additional discounts if we bundle your auto and home insurance.",
-                tip: "Natural transition to bundling opportunity"
-            },
-            'dob-hesitant': {
-                text: "Your date of birth helps us apply age-related discounts and ensure accurate coverage. This information is protected by strict privacy laws.",
-                tip: "Connect to benefits and security"
-            },
-            'dob-why': {
-                text: "Good question. Your date of birth helps us: 1) Verify your identity for security, 2) Apply age-related discounts, and 3) Ensure accurate coverage based on your driving experience.",
-                tip: "Three clear reasons for requesting DOB"
-            },
-            'rate-hesitant': {
-                text: "I understand your hesitation. I'm asking so I can make sure I beat your current rate. Would you be interested if I could save you $X per month?",
-                tip: "Use bracketing technique to get a range"
-            },
-            'vehicle-current': {
-                text: "Perfect. And do you anticipate any changes to your vehicles in the next 6 months? I ask because we can easily add coverage for any new vehicles.",
-                tip: "Plan for future needs"
-            }
-        };
+    // Append the new response
+    container.appendChild(responseElement);
+    
+    // Ensure the response is visible
+    container.classList.add('active');
 
-        const response = responseMap[responseId];
-        if (response) {
-            const tipBox = document.createElement('div');
-            tipBox.className = 'tip-box active';
-            tipBox.innerHTML = `
-                <i data-feather="zap"></i>
-                <div>
-                    <p>${response.text}</p>
-                    <small>${response.tip}</small>
-                </div>
-            `;
-            
-            // Remove any existing active tip boxes
-            document.querySelectorAll('.tip-box.active').forEach(box => box.remove());
-            
-            // Add new tip box
-            document.querySelector('.script-flow').appendChild(tipBox);
-            feather.replace();
-            
-            // Scroll to tip box
-            tipBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // Replace feather icons
+    if (window.feather) {
+        feather.replace();
+    }
+}
+
+function showResponse(responseId) {
+    const responseMap = {
+        'name-yes': {
+            text: "Great! Let's continue with verifying your information to get you the best possible rate.",
+            tip: "Move quickly to next verification item"
+        },
+        'name-no': {
+            text: "I apologize for the error. Could you please provide your correct name for our records?",
+            tip: "Update information before proceeding"
+        },
+        'address-hesitant': {
+            text: "I understand your concern. As a licensed agent, I need this information to provide accurate quotes and ensure you get all available discounts. This information is protected by law.",
+            tip: "Emphasize security and necessity"
+        },
+        'address-bundle': {
+            text: "And is this address for a home you own? I ask because we could look at additional discounts if we bundle your auto and home insurance.",
+            tip: "Natural transition to bundling opportunity"
+        },
+        'dob-hesitant': {
+            text: "Your date of birth helps us apply age-related discounts and ensure accurate coverage. This information is protected by strict privacy laws.",
+            tip: "Connect to benefits and security"
+        },
+        'dob-why': {
+            text: "Good question. Your date of birth helps us: 1) Verify your identity for security, 2) Apply age-related discounts, and 3) Ensure accurate coverage based on your driving experience.",
+            tip: "Three clear reasons for requesting DOB"
+        },
+        'rate-hesitant': {
+            text: "I understand your hesitation. I'm asking so I can make sure I beat your current rate. Would you be interested if I could save you $X per month?",
+            tip: "Use bracketing technique to get a range"
+        },
+        'vehicle-current': {
+            text: "Perfect. And do you anticipate any changes to your vehicles in the next 6 months? I ask because we can easily add coverage for any new vehicles.",
+            tip: "Plan for future needs"
         }
-    }
+    };
 
-    function showCloseScript(type) {
-        const closeScripts = {
-            'bank': {
-                text: "Great choice! Setting up automatic payments with your bank account also qualifies you for our paid-in-full discount. What's your routing and account number?",
-                tip: "Mention additional savings for bank draft"
-            },
-            'card': {
-                text: "Perfect! I can help you set that up right now. Which card would you like to use? We accept all major credit and debit cards.",
-                tip: "Move quickly to card information"
-            },
-            'schedule': {
-                text: "I understand. Keep in mind that rates can change daily. Would you feel more comfortable if we got everything set up now and scheduled your first payment for [future date]?",
-                tip: "Maintain urgency while offering flexibility"
-            }
-        };
-
-        const script = closeScripts[type];
-        if (script) {
-            const closeSection = document.querySelector('.closing-section');
-            closeSection.innerHTML += `
-                <div class="close-script-box">
-                    <p>${script.text}</p>
-                    <div class="tip-box">
-                        <i data-feather="zap"></i>
-                        <span>${script.tip}</span>
-                    </div>
-                </div>
-            `;
-            feather.replace();
-        }
-    }
-
-    function searchObjections(term) {
-        const searchTerm = term.toLowerCase();
-        
-        document.querySelectorAll('.objection-card').forEach(card => {
-            const title = card.querySelector('.objection-title').textContent.toLowerCase();
-            const response = card.querySelector('.objection-response').textContent.toLowerCase();
-            const shouldShow = title.includes(searchTerm) || response.includes(searchTerm);
-            
-            card.style.display = shouldShow ? 'block' : 'none';
-        });
-    }
-
-    // Helper function to format currency
-    function formatCurrency(amount) {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        }).format(amount);
-    }
-
-    // Helper function to calculate savings
-    function calculateSavings(currentRate, newRate) {
-        const savings = currentRate - newRate;
-        return {
-            monthly: savings,
-            annual: savings * 12
-        };
-    }
-
-    // Additional functionality for handling specific scenarios
-    function handleTimeObjection(minutes) {
-        const response = `I understand you're busy. Good news - I only need ${Math.max(1, minutes - 2)} minutes to show you how much you could save. Should we get started?`;
-        showCustomResponse(response);
-    }
-
-    function showCustomResponse(text) {
-        const responseBox = document.createElement('div');
-        responseBox.className = 'custom-response-box';
-        responseBox.innerHTML = `
-            <p>${text}</p>
-            <div class="response-actions">
-                <button onclick="handlePositiveResponse()">Positive Response</button>
-                <button onclick="handleNegativeResponse()">Need More Info</button>
+    const response = responseMap[responseId];
+    if (response) {
+        const tipBox = document.createElement('div');
+        tipBox.className = 'tip-box active';
+        tipBox.innerHTML = `
+            <i data-feather="zap"></i>
+            <div>
+                <p>${response.text}</p>
+                <small>${response.tip}</small>
             </div>
         `;
         
-        document.querySelector('.script-flow').appendChild(responseBox);
-        responseBox.scrollIntoView({ behavior: 'smooth' });
+        // Remove any existing active tip boxes
+        document.querySelectorAll('.tip-box.active').forEach(box => box.remove());
+        
+        // Add new tip box
+        document.querySelector('.script-flow').appendChild(tipBox);
+        feather.replace();
+        
+        // Scroll to tip box
+        tipBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
+}
 
-    function handlePositiveResponse() {
-        // Continue with the sales process
-        showSection('quote');
+function showCloseScript(type) {
+    const closeScripts = {
+        'bank': {
+            text: "Great choice! Setting up automatic payments with your bank account also qualifies you for our paid-in-full discount. What's your routing and account number?",
+            tip: "Mention additional savings for bank draft"
+        },
+        'card': {
+            text: "Perfect! I can help you set that up right now. Which card would you like to use? We accept all major credit and debit cards.",
+            tip: "Move quickly to card information"
+        },
+        'schedule': {
+            text: "I understand. Keep in mind that rates can change daily. Would you feel more comfortable if we got everything set up now and scheduled your first payment for [future date]?",
+            tip: "Maintain urgency while offering flexibility"
+        }
+    };
+
+    const script = closeScripts[type];
+    if (script) {
+        const closeSection = document.querySelector('.closing-section');
+        closeSection.innerHTML += `
+            <div class="close-script-box">
+                <p>${script.text}</p>
+                <div class="tip-box">
+                    <i data-feather="zap"></i>
+                    <span>${script.tip}</span>
+                </div>
+            </div>
+        `;
+        feather.replace();
     }
+}
 
-    function handleNegativeResponse() {
-        // Show additional information or objection handling
-        showSection('objections');
-    }
+function searchObjections(term) {
+    const searchTerm = term.toLowerCase();
+    
+    document.querySelectorAll('.objection-card').forEach(card => {
+        const title = card.querySelector('.objection-title').textContent.toLowerCase();
+        const response = card.querySelector('.objection-response').textContent.toLowerCase();
+        const shouldShow = title.includes(searchTerm) || response.includes(searchTerm);
+        
+        card.style.display = shouldShow ? 'block' : 'none';
+    });
+}
 
-    // Export key functions for external use if needed
-    window.showResponse = showResponse;
-    window.showCloseScript = showCloseScript;
-    window.handleTimeObjection = handleTimeObjection;
+// Helper function to format currency
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    }).format(amount);
+}
+
+// Helper function to calculate savings
+function calculateSavings(currentRate, newRate) {
+    const savings = currentRate - newRate;
+    return {
+        monthly: savings,
+        annual: savings * 12
+    };
+}
+
+// Additional functionality for handling specific scenarios
+function handleTimeObjection(minutes) {
+    const response = `I understand you're busy. Good news - I only need ${Math.max(1, minutes - 2)} minutes to show you how much you could save. Should we get started?`;
+    showCustomResponse(response);
+}
+
+function showCustomResponse(text) {
+    const responseBox = document.createElement('div');
+    responseBox.className = 'custom-response-box';
+    responseBox.innerHTML = `
+        <p>${text}</p>
+        <div class="response-actions">
+            <button onclick="handlePositiveResponse()">Positive Response</button>
+            <button onclick="handleNegativeResponse()">Need More Info</button>
+        </div>
+    `;
+    
+    document.querySelector('.script-flow').appendChild(responseBox);
+    responseBox.scrollIntoView({ behavior: 'smooth' });
+}
+
+function handlePositiveResponse() {
+    // Continue with the sales process
+    showSection('quote');
+}
+
+function handleNegativeResponse() {
+    // Show additional information or objection handling
+    showSection('objections');
+}
+
+// Added placeholder for showSection function
+function showSection(sectionName) {
+    console.log(`Showing section: ${sectionName}`);
+    // Implement section showing logic if needed
+}
+
+// Export key functions for external use if needed
+window.showResponse = showResponse;
+window.showCloseScript = showCloseScript;
+window.handleTimeObjection = handleTimeObjection;
 </script>
