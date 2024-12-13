@@ -728,60 +728,49 @@
         </div>
     </div>
    <script>
-// Initialize everything when the document is ready
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Feather Icons
-    feather.replace();
-    
-    // Set up initial event listeners
-    setupEventListeners();
-    
-    // Show initial section
-    showSection('intro');
-});
-
-function setupEventListeners() {
-    // Objection card clicks
-    document.querySelectorAll('.objection-card').forEach(card => {
-        card.addEventListener('click', () => toggleObjection(card));
+        feather.replace();
+        setupEventListeners();
     });
 
-    // Quick response buttons
-    document.querySelectorAll('.response-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const responseId = btn.getAttribute('data-response');
-            showResponse(responseId);
+    function setupEventListeners() {
+        // Objection card clicks
+        document.querySelectorAll('.objection-card').forEach(card => {
+            card.addEventListener('click', () => toggleObjection(card));
         });
-    });
 
-    // Search functionality
-    const searchInput = document.querySelector('.objections-search input');
-    searchInput.addEventListener('input', (e) => searchObjections(e.target.value));
-
-    // Closing buttons
-    document.querySelectorAll('.closing-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const type = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
-            showCloseScript(type);
+        // Quick response buttons
+        document.querySelectorAll('.response-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showResponse(btn.getAttribute('data-response'));
+            });
         });
-    });
-}
 
-function toggleObjection(card) {
-    const response = card.querySelector('.objection-response');
-    const isVisible = response.classList.contains('active');
-    
-    document.querySelectorAll('.objection-response').forEach(r => {
-        r.classList.remove('active');
-    });
+        // Search functionality
+        const searchInput = document.querySelector('.objections-search input');
+        searchInput.addEventListener('input', (e) => searchObjections(e.target.value));
 
-    if (!isVisible) {
-        response.classList.add('active');
+        // Closing buttons
+        document.querySelectorAll('.closing-btn').forEach(btn => {
+            btn.addEventListener('click', () => showCloseScript(btn.getAttribute('onclick').match(/'([^']+)'/)[1]));
+        });
     }
-}
 
-function showResponse(responseId) {
+    function toggleObjection(card) {
+        const response = card.querySelector('.objection-response');
+        const isVisible = response.classList.contains('active');
+        
+        document.querySelectorAll('.objection-response').forEach(r => {
+            r.classList.remove('active');
+        });
+
+        if (!isVisible) {
+            response.classList.add('active');
+        }
+    }
+
+    function showResponse(responseId) {
     const responseMap = {
         // Verification Flow Responses
         'name-yes': {
@@ -848,107 +837,131 @@ function showResponse(responseId) {
 
     const response = responseMap[responseId];
     if (response) {
-        // Remove any existing tip boxes in the verification section
-        document.querySelectorAll('.verification-section .tip-box, .script-flow .tip-box').forEach(box => box.remove());
+        const tipBox = document.createElement('div');
+        tipBox.className = 'tip-box active';
+        tipBox.innerHTML = `
+            <i data-feather="zap"></i>
+            <div>
+                <p>${response.text}</p>
+                <small>${response.tip}</small>
+            </div>
+        `;
         
-        // Find the button that was clicked
-        const clickedButton = document.querySelector(`.response-btn[data-response="${responseId}"]`);
+        // Remove any existing active tip boxes
+        document.querySelectorAll('.tip-box.active').forEach(box => box.remove());
         
-        if (clickedButton) {
-            // Create the tip box
-            const tipBox = document.createElement('div');
-            tipBox.className = 'tip-box';
-            tipBox.innerHTML = `
-                <i data-feather="zap"></i>
-                <div>
-                    <p>${response.text}</p>
-                    <small>${response.tip}</small>
-                </div>
-            `;
-            
-            // Determine the container (verification section or script flow)
-            const container = clickedButton.closest('.verification-section') || 
-                              clickedButton.closest('.script-flow');
-            
-            if (container) {
-                const quickResponses = clickedButton.closest('.verify-content') || 
-                                       clickedButton.closest('.quick-responses');
-                
-                // Insert the tip box after the quick responses
-                if (quickResponses) {
-                    quickResponses.insertAdjacentElement('afterend', tipBox);
-                } else {
-                    container.appendChild(tipBox);
-                }
-                
-                // Replace feather icons
-                feather.replace();
-                
-                // Scroll to tip box
-                tipBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
-        }
+        // Add new tip box to the current script flow
+        const currentScriptFlow = document.querySelector('.script-flow:has(.quick-responses .response-btn[onclick*="' + responseId + '"])') || 
+                                   document.querySelector('.script-flow');
+        
+        currentScriptFlow.appendChild(tipBox);
+        feather.replace();
+        
+        // Scroll to tip box
+        tipBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } else {
         console.log(`No response mapped for: ${responseId}`);
     }
 }
+    function showCloseScript(type) {
+        const closeScripts = {
+            'bank': {
+                text: "Great choice! Setting up automatic payments with your bank account also qualifies you for our easy pay discount. What's your routing and account number?",
+                tip: "Mention additional savings for bank draft"
+            },
+            'card': {
+                text: "Perfect! I can help you set that up right now. Which card would you like to use? We accept all major credit and debit cards.",
+                tip: "Move quickly to card information"
+            },
+            'schedule': {
+                text: "I understand. Keep in mind that the rates will change, they fluctuate on a daily basis. Let's avoid that and get everything set up now and scheduled your first payment for [future date]?",
+                tip: "Maintain urgency while offering flexibility"
+            }
+        };
 
-function showCloseScript(type) {
-    const closeScripts = {
-        'bank': {
-            text: "Great choice! Setting up automatic payments with your bank account also qualifies you for our paid-in-full discount. What's your routing and account number?",
-            tip: "Mention additional savings for bank draft"
-        },
-        'card': {
-            text: "Perfect! I can help you set that up right now. Which card would you like to use? We accept all major credit and debit cards.",
-            tip: "Move quickly to card information"
-        },
-        'schedule': {
-            text: "I understand. Keep in mind that rates can change daily. Would you feel more comfortable if we got everything set up now and scheduled your first payment for [future date]?",
-            tip: "Maintain urgency while offering flexibility"
+        const script = closeScripts[type];
+        if (script) {
+            // Remove any existing close script boxes
+            const existingBoxes = document.querySelectorAll('.close-script-box');
+            existingBoxes.forEach(box => box.remove());
+
+            const closeSection = document.querySelector('.closing-section');
+            const scriptBox = document.createElement('div');
+            scriptBox.className = 'close-script-box';
+            scriptBox.innerHTML = `
+                <p>${script.text}</p>
+                <div class="tip-box">
+                    <i data-feather="zap"></i>
+                    <span>${script.tip}</span>
+                </div>
+            `;
+            
+            closeSection.appendChild(scriptBox);
+            feather.replace();
         }
-    };
+    }
+    function searchObjections(term) {
+        const searchTerm = term.toLowerCase();
+        
+        document.querySelectorAll('.objection-card').forEach(card => {
+            const title = card.querySelector('.objection-title').textContent.toLowerCase();
+            const response = card.querySelector('.objection-response').textContent.toLowerCase();
+            const shouldShow = title.includes(searchTerm) || response.includes(searchTerm);
+            
+            card.style.display = shouldShow ? 'block' : 'none';
+        });
+    }
 
-    const script = closeScripts[type];
-    if (script) {
-        // Remove any existing close script boxes
-        const existingBoxes = document.querySelectorAll('.close-script-box');
-        existingBoxes.forEach(box => box.remove());
+    // Helper function to format currency
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(amount);
+    }
 
-        const closeSection = document.querySelector('.closing-section');
-        const scriptBox = document.createElement('div');
-        scriptBox.className = 'close-script-box';
-        scriptBox.innerHTML = `
-            <p>${script.text}</p>
-            <div class="tip-box">
-                <i data-feather="zap"></i>
-                <span>${script.tip}</span>
+    // Helper function to calculate savings
+    function calculateSavings(currentRate, newRate) {
+        const savings = currentRate - newRate;
+        return {
+            monthly: savings,
+            annual: savings * 12
+        };
+    }
+
+    // Additional functionality for handling specific scenarios
+    function handleTimeObjection(minutes) {
+        const response = `I understand you're busy. Good news - I only need ${Math.max(1, minutes - 2)} minutes to show you how much you could save. Should we get started?`;
+        showCustomResponse(response);
+    }
+
+    function showCustomResponse(text) {
+        const responseBox = document.createElement('div');
+        responseBox.className = 'custom-response-box';
+        responseBox.innerHTML = `
+            <p>${text}</p>
+            <div class="response-actions">
+                <button onclick="handlePositiveResponse()">Positive Response</button>
+                <button onclick="handleNegativeResponse()">Need More Info</button>
             </div>
         `;
         
-        closeSection.appendChild(scriptBox);
-        feather.replace();
+        document.querySelector('.script-flow').appendChild(responseBox);
+        responseBox.scrollIntoView({ behavior: 'smooth' });
     }
-}
 
-function searchObjections(term) {
-    const searchTerm = term.toLowerCase();
-    
-    document.querySelectorAll('.objection-card').forEach(card => {
-        const title = card.querySelector('.objection-title').textContent.toLowerCase();
-        const response = card.querySelector('.objection-response').textContent.toLowerCase();
-        const shouldShow = title.includes(searchTerm) || response.includes(searchTerm);
-        
-        card.style.display = shouldShow ? 'block' : 'none';
-    });
-}
+    function handlePositiveResponse() {
+        // Continue with the sales process
+        showSection('quote');
+    }
 
-// Placeholder function for showing sections
-function showSection(sectionName) {
-    console.log(`Showing section: ${sectionName}`);
-}
+    function handleNegativeResponse() {
+        // Show additional information or objection handling
+        showSection('objections');
+    }
 
-// Export key functions for external use if needed
-window.showResponse = showResponse;
-window.showCloseScript = showCloseScript;
+    // Export key functions for external use if needed
+    window.showResponse = showResponse;
+    window.showCloseScript = showCloseScript;
+    window.handleTimeObjection = handleTimeObjection;
 </script>
