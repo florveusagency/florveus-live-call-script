@@ -246,7 +246,7 @@
             gap: 0.5rem;
         }
 
-   .objection-response {
+    .objection-response {
     display: block; /* Temporarily make visible for debugging */
 }
 
@@ -267,7 +267,7 @@
             color: var(--secondary);
         }
 
- /* Closing Section */
+        /* Closing Section */
         .closing-section {
             background: var(--primary);
             color: var(--light);
@@ -754,24 +754,18 @@
     }
 
     function toggleObjection(card) {
-    // Get the clicked card's response element
     const response = card.querySelector('.objection-response');
     
     if (response) {
+        const isVisible = response.classList.contains('active');
+        
         // Hide all other responses
         document.querySelectorAll('.objection-response').forEach(r => {
-            if (r !== response) {
-                r.classList.remove('active');
-                r.style.display = 'none'; // Ensure it's hidden
-            }
+            r.classList.remove('active');
         });
         
-        // Toggle the clicked card's response visibility
-        if (response.style.display === 'block') {
-            response.style.display = 'none';
-            response.classList.remove('active');
-        } else {
-            response.style.display = 'block';
+        // Show/hide the clicked card's response
+        if (!isVisible) {
             response.classList.add('active');
         }
     }
@@ -781,7 +775,6 @@
 document.querySelectorAll('.objection-card').forEach(card => {
     card.addEventListener('click', () => toggleObjection(card));
 });
-
 
 
 
@@ -844,13 +837,13 @@ document.querySelectorAll('.objection-card').forEach(card => {
         if (response) {
             const tipBox = document.createElement('div');
             tipBox.className = 'tip-box active';
-            tipBox.innerHTML = `
+            tipBox.innerHTML = 
                 <i data-feather="zap"></i>
                 <div>
                     <p>${response.text}</p>
                     <small>${response.tip}</small>
                 </div>
-            `;
+            ;
             
             // Remove any existing active tip boxes
             document.querySelectorAll('.tip-box.active').forEach(box => box.remove());
@@ -883,7 +876,7 @@ document.querySelectorAll('.objection-card').forEach(card => {
         const script = closeScripts[type];
         if (script) {
             const closeSection = document.querySelector('.closing-section');
-            closeSection.innerHTML += `
+            closeSection.innerHTML += 
                 <div class="close-script-box">
                     <p>${script.text}</p>
                     <div class="tip-box">
@@ -891,7 +884,7 @@ document.querySelectorAll('.objection-card').forEach(card => {
                         <span>${script.tip}</span>
                     </div>
                 </div>
-            `;
+            ;
             feather.replace();
         }
     }
@@ -927,20 +920,20 @@ document.querySelectorAll('.objection-card').forEach(card => {
 
     // Additional functionality for handling specific scenarios
     function handleTimeObjection(minutes) {
-        const response = `I understand you're busy. Good news - I only need ${Math.max(1, minutes - 2)} minutes to show you how much you could save. Should we get started?`;
+        const response = I understand you're busy. Good news - I only need ${Math.max(1, minutes - 2)} minutes to show you how much you could save. Should we get started?;
         showCustomResponse(response);
     }
 
     function showCustomResponse(text) {
         const responseBox = document.createElement('div');
         responseBox.className = 'custom-response-box';
-        responseBox.innerHTML = `
+        responseBox.innerHTML = 
             <p>${text}</p>
             <div class="response-actions">
                 <button onclick="handlePositiveResponse()">Positive Response</button>
                 <button onclick="handleNegativeResponse()">Need More Info</button>
             </div>
-        `;
+        ;
         
         document.querySelector('.script-flow').appendChild(responseBox);
         responseBox.scrollIntoView({ behavior: 'smooth' });
