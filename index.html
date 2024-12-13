@@ -41,9 +41,12 @@
         }
 
         .container {
-            display: flex;
-            height: 100vh;
-        }
+    display: flex;
+    flex-direction: row; /* Ensure items are in a row */
+    height: 100vh;
+    width: 100vw; /* Full viewport width */
+    overflow: hidden; /* Prevent scrolling */
+}
 
         /* Scrollbar Styling */
         ::-webkit-scrollbar {
@@ -66,12 +69,12 @@
 
         /* Main Script Area */
         .script-area {
-            flex: 1;
-            padding: 2rem;
-            background: var(--light);
-            overflow-y: auto;
-            border-right: 1px solid var(--gray-200);
-        }
+    flex: 1; /* Take up available space */
+    overflow-y: auto;
+    padding: 2rem;
+    background: var(--light);
+    border-right: 1px solid var(--gray-200);
+}
 
         .script-header {
             background: var(--primary);
@@ -198,12 +201,14 @@
 
         /* Objections Panel */
         .objections-panel {
-            width: 400px;
-            background: var(--light);
-            display: flex;
-            flex-direction: column;
-            border-left: 1px solid var(--gray-200);
-        }
+    width: 400px; /* Fixed width */
+    max-width: 400px;
+    background: var(--light);
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--gray-200);
+    overflow-y: auto;
+}
 
         .objections-header {
             background: var(--primary);
