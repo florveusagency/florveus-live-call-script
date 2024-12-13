@@ -345,7 +345,7 @@ body {
     </style>
 </head>
 <body>
-    <div class="container">
+     <div class="container">
         <!-- Main Script Area -->
         <div class="script-area">
             <div class="script-header">
@@ -734,25 +734,22 @@ body {
  <script>
     // Initialize everything when the document is ready
     document.addEventListener('DOMContentLoaded', function() {
-    feather.replace();
-    setupEventListeners();
-});
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Set up initial event listeners
+        setupEventListeners();
+        
+        // Show initial section
+        showSection('intro');
+    });
 
     function setupEventListeners() {
-    // Objection card clicks
-    document.querySelectorAll('.objection-card').forEach(card => {
-        card.addEventListener('click', function() {
-            // Remove active class from all objection responses
-            document.querySelectorAll('.objection-response').forEach(resp => {
-                resp.classList.remove('active');
-            });
-
-            // Toggle the clicked card's response
-            const response = this.querySelector('.objection-response');
-            if (response) {
-                response.classList.toggle('active');
-            }
+        // Objection card clicks
+        document.querySelectorAll('.objection-card').forEach(card => {
+            card.addEventListener('click', () => toggleObjection(card));
         });
+
         // Tab navigation
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => switchTab(btn.dataset.tab));
@@ -870,45 +867,37 @@ body {
         }
     }
 
-function showCloseScript(type) {
-    const closeScripts = {
-        'bank': {
-            text: "Great choice! Setting up automatic payments with your bank account also qualifies you for our paid-in-full discount. What's your routing and account number?",
-            tip: "Mention additional savings for bank draft"
-        },
-        'card': {
-            text: "Perfect! I can help you set that up right now. Which card would you like to use? We accept all major credit and debit cards.",
-            tip: "Move quickly to card information"
-        },
-        'schedule': {
-            text: "I understand. Keep in mind that rates can change daily. Would you feel more comfortable if we got everything set up now and scheduled your first payment for [future date]?",
-            tip: "Maintain urgency while offering flexibility"
+    function showCloseScript(type) {
+        const closeScripts = {
+            'bank': {
+                text: "Great choice! Setting up automatic payments with your bank account also qualifies you for our paid-in-full discount. What's your routing and account number?",
+                tip: "Mention additional savings for bank draft"
+            },
+            'card': {
+                text: "Perfect! I can help you set that up right now. Which card would you like to use? We accept all major credit and debit cards.",
+                tip: "Move quickly to card information"
+            },
+            'schedule': {
+                text: "I understand. Keep in mind that rates can change daily. Would you feel more comfortable if we got everything set up now and scheduled your first payment for [future date]?",
+                tip: "Maintain urgency while offering flexibility"
+            }
+        };
+
+        const script = closeScripts[type];
+        if (script) {
+            const closeSection = document.querySelector('.closing-section');
+            closeSection.innerHTML += `
+                <div class="close-script-box">
+                    <p>${script.text}</p>
+                    <div class="tip-box">
+                        <i data-feather="zap"></i>
+                        <span>${script.tip}</span>
+                    </div>
+                </div>
+            `;
+            feather.replace();
         }
-    };
-
-    const script = closeScripts[type];
-    if (script) {
-        const closeSection = document.querySelector('.closing-section');
-        
-        // Remove any existing close script boxes
-        const existingScriptBoxes = closeSection.querySelectorAll('.close-script-box');
-        existingScriptBoxes.forEach(box => box.remove());
-
-        // Add new script box
-        const scriptBox = document.createElement('div');
-        scriptBox.className = 'close-script-box';
-        scriptBox.innerHTML = `
-            <p>${script.text}</p>
-            <div class="tip-box">
-                <i data-feather="zap"></i>
-                <span>${script.tip}</span>
-            </div>
-        `;
-        
-        closeSection.appendChild(scriptBox);
-        feather.replace();
     }
-}
 
     function searchObjections(term) {
         const searchTerm = term.toLowerCase();
