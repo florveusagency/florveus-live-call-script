@@ -888,25 +888,35 @@ function setupEventListeners() {
     // Objection card clicks
     document.querySelectorAll('.objection-card').forEach(card => {
         card.addEventListener('click', function(event) {
-            // Prevent any other event propagation
+            // Prevent event from bubbling up
             event.stopPropagation();
 
-            // Toggle the response for this specific card
+            // Find the response within this specific card
             const response = this.querySelector('.objection-response');
             
-            // First, close all other responses
-            document.querySelectorAll('.objection-response').forEach(resp => {
-                if (resp !== response) {
-                    resp.classList.remove('active');
-                }
-            });
-
-            // Then toggle the clicked card's response
+            // If response exists
             if (response) {
+                // First, close all other responses
+                document.querySelectorAll('.objection-response').forEach(r => {
+                    if (r !== response) {
+                        r.classList.remove('active');
+                    }
+                });
+
+                // Toggle this specific response
                 response.classList.toggle('active');
             }
         });
     });
+
+    // Rest of your existing event listener setup...
+}
+
+// Ensure this is called when the DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    feather.replace();
+    setupEventListeners();
+});
 
 
     // Search functionality
