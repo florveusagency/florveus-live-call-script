@@ -754,17 +754,34 @@
     }
 
     function toggleObjection(card) {
+    // Get the clicked card's response element
     const response = card.querySelector('.objection-response');
     
     if (response) {
-        response.classList.toggle('active');
+        // Hide all other responses
+        document.querySelectorAll('.objection-response').forEach(r => {
+            if (r !== response) {
+                r.classList.remove('active');
+                r.style.display = 'none'; // Ensure it's hidden
+            }
+        });
+        
+        // Toggle the clicked card's response visibility
+        if (response.style.display === 'block') {
+            response.style.display = 'none';
+            response.classList.remove('active');
+        } else {
+            response.style.display = 'block';
+            response.classList.add('active');
+        }
     }
 }
 
-// Attach event listeners
+// Attach event listeners to all objection cards
 document.querySelectorAll('.objection-card').forEach(card => {
     card.addEventListener('click', () => toggleObjection(card));
 });
+
 
 
 
