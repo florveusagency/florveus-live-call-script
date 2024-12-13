@@ -758,17 +758,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function toggleObjection(card) {
-        const response = card.querySelector('.objection-response');
-        const isVisible = response.classList.contains('active');
-        
-        document.querySelectorAll('.objection-response').forEach(r => {
-            r.classList.remove('active');
-        });
-
-        if (!isVisible) {
-            response.classList.add('active');
-        }
+    const response = card.querySelector('.objection-response');
+    
+    if (response) {
+        response.classList.toggle('active');
+        console.log('Toggled active class:', response.classList.contains('active'));
     }
+}
+
 
     function showResponse(responseId) {
     const responseMap = {
