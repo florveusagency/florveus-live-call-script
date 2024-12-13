@@ -6,6 +6,16 @@
     <title>Live Transfer Script Navigator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.1/feather.min.js"></script>
     <style>
+        .logo-container {
+    text-align: center; /* Center the logo horizontally */
+    margin-bottom: 1rem; /* Add space below the logo */
+}
+
+.logo {
+    max-width: 150px; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
         :root {
             --primary: #003087;  /* Allstate Blue */
             --secondary: #FFD100;  /* Allstate Yellow */
@@ -248,7 +258,17 @@
 
        .objection-response {
     display: none; /* Hidden by default */
+    margin-top: 1rem; /* Add space between objection responses */
+    padding-top: 1rem; /* Optional padding for better separation */
+    border-top: 1px solid var(--gray-200); /* Optional separator line */
+    line-height: 1.8; /* Space between lines for readability */
 }
+
+.objection-response p {
+    text-indent: 2rem; /* Indent first line of each paragraph */
+    margin-bottom: 1rem; /* Space between paragraphs */
+}
+
 
 .objection-response.active {
     display: block; /* Shown when active */
@@ -343,6 +363,10 @@
     </style>
 </head>
 <body>
+    <!-- Logo Section -->
+    <div class="logo-container">
+        <img src="https://logos-world.net/wp-content/uploads/2021/08/Allstate-Logo.png" alt="Logo" class="logo">
+    </div>
     <div class="container">
         <!-- Main Script Area -->
         <div class="script-area">
@@ -486,7 +510,8 @@
                         <span>"I only have a few minutes"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"Perfect! I actually only have [less time than they mentioned], so let's get started on finding you a better rate right away. Can you verify your address for me?"</p>
+                        <p>"Perfect! I actually only have [less time than they mentioned], so let's get started on finding you a better rate right away.</p> 
+                            <p>Can you verify your address for me?"</p>
                         <div class="tip-box">
                             <i data-feather="zap"></i>
                             <span>Take control by mentioning less time than they have</span>
@@ -500,7 +525,8 @@
                         <span>"I don't want to share my information"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I completely understand your concern about privacy. As a licensed agent, I'm required by law to verify this information to provide you with an accurate quote. This protects both you and ensures you get the best possible rate. Would that be okay?"</p>
+                        <p>"I completely understand your concern about privacy. As a licensed agent, I'm required by law to verify this information to provide you with an accurate quote.</p> 
+                        <p>This protects both you and ensures you get the best possible rate. Would that be okay?"</p>
                     </div>
                 </div>
 
@@ -510,7 +536,8 @@
                         <span>"I'm happy with my current rate"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"That's great! Many of our current customers said the same thing before saving [average savings amount] with us. Since I have you on the phone, let me at least show you what we can offer - it only takes a few minutes, and you might be surprised by the savings."</p>
+                        <p>"That's great! Many of our current customers said the same thing before saving [average savings amount] with us.</p>
+                            <p>Since I have you on the phone, let me at least show you what we can offer - it only takes a few minutes, and you might be surprised by the savings."</p>
                     </div>
                 </div>
 <!-- Continuing with objection cards -->
@@ -521,7 +548,8 @@
                         <span>"I need to talk to my spouse"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I understand wanting to discuss this with your spouse. Many of our customers say the same thing until they see how much they could save. Let me get you the quote now - that way you'll have specific numbers to discuss. If your spouse has any questions, I can talk to both of you. What's your current rate so I can show you the savings?"</p>
+                        <p>"I understand wanting to discuss this with your spouse. Many of our customers say the same thing until they see how much they could save. </p>
+                        <p>Let me get you the quote now - that way you'll have specific numbers to discuss. If your spouse has any questions, I can talk to both of you. What's your current rate so I can show you the savings?"</p>
                         <div class="follow-up">
                             <p>If still resistant:</p>
                             <p>"Would it be easier if we got your spouse on a three-way call right now? That way I can answer any questions immediately."</p>
@@ -539,7 +567,8 @@
                         <span>"I won't share my current rate"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I understand your hesitation. I'm not asking to be nosy - knowing your current rate helps me ensure I'm offering you better coverage at a better price. Just like you wouldn't want to pay more for the same groceries, I want to make sure I'm saving you money. Can you at least tell me if you're paying more or less than $150 per month?"</p>
+                        <p>"I understand your hesitation. I'm not asking to be nosy - knowing your current rate helps me ensure I'm offering you better coverage at a better price. Just like you wouldn't want to pay more for the same groceries, I want to make sure I'm saving you money.</p> 
+                            <p>Can you at least tell me if you're paying more or less than $150 per month?"</p>
                         <div class="follow-up">
                             <p>Alternative approach:</p>
                             <p>"Even without knowing your current rate, I'm confident we can save you money. Would you be interested if I could get you full coverage for less than [amount] per month?"</p>
@@ -557,7 +586,8 @@
                         <span>"I'm still in my six-month policy"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"Actually, you can switch insurance at any time - you're never locked in. When you switch to Allstate, we'll help you cancel your old policy and you'll get a refund for any unused premium. The sooner you switch, the sooner you start saving. Would you like to see how much you could save right now?"</p>
+                        <p>"Actually, you can switch insurance at any time - you're never locked in. When you switch to Allstate, we'll help you cancel your old policy and you'll get a refund for any unused premium.</p> 
+                        <p>The sooner you switch, the sooner you start saving. Would you like to see how much you could save right now?"</p>
                         <div class="follow-up">
                             <p>If concerned about refund:</p>
                             <p>"Your current company is required by law to refund unused premium. We'll help handle the cancellation to make sure you get your refund."</p>
@@ -593,7 +623,8 @@
                         <span>"I have a claim on my record"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"Many of our customers have had claims - that's what insurance is for! In fact, we specialize in helping people with claims get better rates. What kind of claim was it and when did it happen? This helps me find the best discounts for your situation."</p>
+                        <p>"Many of our customers have had claims - that's what insurance is for! In fact, we specialize in helping people with claims get better rates.</p> 
+                            <p>What kind of claim was it and when did it happen? This helps me find the best discounts for your situation."</p>
                         <div class="follow-up">
                             <p>After they share:</p>
                             <p>"Thanks for sharing that. The good news is, claims impact your rate less over time, and we have several discounts that could help offset any impact. Let me show you what we can do."</p>
@@ -611,7 +642,8 @@
                         <span>"I don't want to share personal information"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I completely understand your concern about privacy. As a licensed agent, I'm bound by strict privacy laws and use this information solely to ensure you get all available discounts. Your information is protected by law. Which piece of information concerns you most?"</p>
+                        <p>"I completely understand your concern about privacy. As a licensed agent, I'm bound by strict privacy laws and use this information solely to ensure you get all available discounts.</p> 
+                        <p>Your information is protected by law. Which piece of information concerns you most?"</p>
                         <div class="follow-up">
                             <p>If concerned about DOB:</p>
                             <p>"Your date of birth helps us apply age-related discounts and ensure accurate coverage. We can't give you the best rate without it."</p>
@@ -631,7 +663,8 @@
                         <span>"I'll call you back"</span>
                     </div>
                     <div class="objection-response">
-                        <p>"I understand wanting to call back, but these rates change frequently, and I want to make sure you get the best rate possible. Let me ask you this - if I could save you [amount] per month on better coverage, would you want to know that now or risk losing that rate?"</p>
+                        <p>"I understand wanting to call back, but these rates change frequently, and I want to make sure you get the best rate possible.</p>
+                            <p>Let me ask you this - if I could save you [amount] per month on better coverage, would you want to know that now or risk losing that rate?"</p>
                         <div class="follow-up">
                             <p>If still wanting to call back:</p>
                             <p>"I've got your information pulled up right now. It'll take longer to go through everything if you call back. Since we're already talking, let me at least show you the savings available right now - it only takes a few minutes."</p>
