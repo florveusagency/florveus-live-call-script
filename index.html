@@ -6,346 +6,328 @@
     <title>Insurance Sales Script Navigator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.1/feather.min.js"></script>
     <style>
-       :root {
-    --primary: #003087;  /* Allstate Blue */
-    --secondary: #FFD100;  /* Allstate Yellow */
-    --dark: #1A1A1A;
-    --light: #FFFFFF;
-    --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
-    --gray-300: #d1d5db;
-    --gray-400: #9ca3af;
-    --gray-500: #6b7280;
-    --gray-600: #4b5563;
-    --gray-700: #374151;
-    --success: #10b981;
-    --warning: #f59e0b;
-    --error: #ef4444;
-}
+        :root {
+            --primary: #003087;  /* Allstate Blue */
+            --secondary: #FFD100;  /* Allstate Yellow */
+            --dark: #1A1A1A;
+            --light: #FFFFFF;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
 
-body {
-    background-color: var(--light);
-    height: 100vh;
-    overflow: hidden;
-}
+        body {
+            background-color: var(--light);
+            height: 100vh;
+            overflow: hidden;
+        }
 
-.container {
-    display: flex;
-    height: 100vh;
-}
+        .container {
+            display: flex;
+            height: 100vh;
+        }
 
-/* Main Script Area */
-.script-area {
-    flex: 1;
-    padding: 2rem;
-    background: var(--light);
-    overflow-y: auto;
-    border-right: 1px solid var(--gray-200);
-}
+        /* Main Script Area */
+        .script-area {
+            flex: 1;
+            padding: 2rem;
+            background: var(--light);
+            overflow-y: auto;
+            border-right: 1px solid var(--gray-200);
+        }
 
-.script-header {
-    background: var(--primary);
-    color: var(--light);
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 2rem;
-}
+        .script-header {
+            background: var(--primary);
+            color: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
 
-.script-header h1 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
+        .script-header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
 
-.script-header p {
-    font-size: 0.95rem;
-    opacity: 0.9;
-}
+        .script-header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
 
-.verification-section {
-    background: var(--gray-100);
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-}
+        .verification-section {
+            background: var(--gray-100);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
 
-.verification-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    background: var(--light);
-    border-radius: 6px;
-    margin-bottom: 0.5rem;
-    border: 1px solid var(--gray-200);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
+        .verification-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--gray-200);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
-.verification-item:hover {
-    border-color: var(--primary);
-    transform: translateY(-1px);
-}
+        .verification-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
 
-.verification-item i {
-    color: var(--primary);
-}
+        .verification-item i {
+            color: var(--primary);
+        }
 
-.script-flow {
-    background: var(--light);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid var(--gray-200);
-    margin-bottom: 1.5rem;
-}
+        .script-flow {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+            margin-bottom: 1.5rem;
+        }
 
-.flow-step {
-    padding: 1rem;
-    border-bottom: 1px solid var(--gray-200);
-}
+        .flow-step {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
 
-.flow-step:last-child {
-    border-bottom: none;
-}
+        .flow-step:last-child {
+            border-bottom: none;
+        }
 
-.flow-step h3 {
-    color: var(--primary);
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
+        .flow-step h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-.script-text {
-    color: var(--gray-700);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-}
+        .script-text {
+            color: var(--gray-700);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
 
-.quick-responses {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
-}
+        .quick-responses {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
 
-.response-btn {
-    background: var(--gray-100);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    color: var(--gray-700);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 0.9rem;
-}
+        .response-btn {
+            background: var(--gray-100);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            color: var(--gray-700);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
 
-.response-btn:hover {
-    background: var(--secondary);
-    color: var(--dark);
-}
+        .response-btn:hover {
+            background: var(--secondary);
+            color: var(--dark);
+        }
 
-.tip-box {
-    background: var(--gray-100);
-    border-left: 4px solid var(--secondary);
-    padding: 1rem;
-    margin: 1rem 0;
-    border-radius: 0 4px 4px 0;
-}
+        /* Objections Panel */
+        .objections-panel {
+            width: 400px;
+            background: var(--light);
+            border-left: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+        }
 
-.tip-box i {
-    color: var(--secondary);
-}
+        .objections-header {
+            padding: 1.5rem;
+            background: var(--primary);
+            color: var(--light);
+        }
 
-/* Objections Panel */
-.objections-panel {
-    width: 400px;
-    background: var(--light);
-    border-left: 1px solid var(--gray-200);
-    display: flex;
-    flex-direction: column;
-}
+        .objections-header h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
 
-.objections-header {
-    padding: 1.5rem;
-    background: var(--primary);
-    color: var(--light);
-}
+        .objections-search {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
 
-.objections-header h2 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-}
+        .objections-search input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            width: 100%;
+            outline: none;
+        }
 
-.objections-search {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 0.5rem;
-    border-radius: 4px;
-}
+        .objections-search input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
 
-.objections-search input {
-    background: transparent;
-    border: none;
-    color: var(--light);
-    width: 100%;
-    outline: none;
-}
+        .objections-tabs {
+            display: flex;
+            gap: 0.25rem;
+            padding: 1rem;
+            background: var(--gray-100);
+            overflow-x: auto;
+        }
 
-.objections-search input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-}
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--gray-600);
+            cursor: pointer;
+            white-space: nowrap;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
 
-.objections-tabs {
-    display: flex;
-    gap: 0.25rem;
-    padding: 1rem;
-    background: var(--gray-100);
-    overflow-x: auto;
-}
+        .tab-btn.active {
+            background: var(--primary);
+            color: var(--light);
+        }
 
-.tab-btn {
-    padding: 0.5rem 1rem;
-    background: transparent;
-    border: none;
-    color: var(--gray-600);
-    cursor: pointer;
-    white-space: nowrap;
-    border-radius: 4px;
-    transition: all 0.2s ease;
-}
+        .objections-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
 
-.tab-btn.active {
-    background: var(--primary);
-    color: var(--light);
-}
+        .objection-card {
+            background: var(--light);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
-.objections-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1.5rem;
-}
+        .objection-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
 
-.objection-card {
-    background: var(--light);
-    border: 1px solid var(--gray-200);
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
+        .objection-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-.objection-card:hover {
-    border-color: var(--primary);
-    transform: translateY(-1px);
-}
+        .objection-response {
+            display: none;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--gray-200);
+        }
 
-.objection-title {
-    color: var(--primary);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
+        .objection-response.active {
+            display: block;
+        }
 
-.objection-response {
-    display: none;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--gray-200);
-}
+        .tip-box {
+            background: var(--gray-100);
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
 
-.objection-response.active {
-    display: block;
-}
+        .tip-box i {
+            color: var(--secondary);
+        }
 
-/* Closing Section Specific Styles */
-.closing-section {
-    background: var(--primary);
-    color: var(--light);
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-top: 2rem;
-}
+        /* Closing Section */
+        .closing-section {
+            background: var(--primary);
+            color: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
 
-.closing-section h3 {
-    color: var(--light);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
+        .closing-section h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-.closing-section .script-text {
-    color: var(--light);
-}
+        .closing-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
 
-.closing-section .tip-box {
-    background: rgba(255, 255, 255, 0.1);
-    border-left: 4px solid var(--secondary);
-    padding: 1rem;
-    margin: 1rem 0;
-    border-radius: 0 4px 4px 0;
-    color: var(--light);
-}
+        .closing-btn {
+            background: var(--secondary);
+            color: var(--dark);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
 
-.closing-section .tip-box i {
-    color: var(--secondary);
-}
+        .closing-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-.closing-options {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .objections-panel {
+                width: 350px;
+            }
+        }
 
-.closing-btn {
-    background: var(--secondary);
-    color: var(--dark);
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.closing-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .objections-panel {
-        width: 350px;
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-    
-    .objections-panel {
-        width: 100%;
-        max-height: 400px;
-    }
-}
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .objections-panel {
+                width: 100%;
+                max-height: 400px;
+            }
+        }
     </style>
 </head>
 <body>
-     <div class="container">
+    <div class="container">
         <!-- Main Script Area -->
         <div class="script-area">
             <div class="script-header">
@@ -726,495 +708,241 @@ body {
                         </div>
                     </div>
                 </div>
-                <div class="objection-card" data-category="price">
-    <div class="objection-title">
-        <i data-feather="dollar-sign"></i>
-        <span>"I can't afford insurance right now"</span>
-    </div>
-    <div class="objection-response">
-        <p>"I understand budget concerns. What monthly payment would work best for you? We can adjust coverage and deductibles to find a plan that fits your financial situation. Many customers are surprised to find we can provide better coverage at a lower cost."</p>
-        <div class="follow-up">
-            <p>Alternative approach:</p>
-            <p>"Let's look at ways to reduce your premium. Do you qualify for any discounts like good driver, multi-policy, or safety feature discounts?"</p>
-        </div>
-        <div class="tip-box">
-            <i data-feather="zap"></i>
-            <span>Focus on flexibility and finding a solution</span>
-        </div>
-    </div>
-</div>
 
-<div class="objection-card" data-category="price">
-    <div class="objection-title">
-        <i data-feather="trending-up"></i>
-        <span>"Insurance prices are too high everywhere"</span>
-    </div>
-    <div class="objection-response">
-        <p>"You're right that insurance can be expensive. That's exactly why I'm here - to help you find the most competitive rate possible. Different companies weigh factors differently, which means significant savings can be found by shopping around."</p>
-        <div class="follow-up">
-            <p>Probing questions:</p>
-            <p>"What factors are most important to you in an insurance policy? Coverage, price, or customer service?"</p>
-        </div>
-        <div class="tip-box">
-            <i data-feather="zap"></i>
-            <span>Acknowledge their concern while positioning yourself as a solution</span>
-        </div>
-    </div>
-</div>
-                <div class="objection-card" data-category="timing">
-    <div class="objection-title">
-        <i data-feather="calendar"></i>
-        <span>"This isn't a good time to switch"</span>
-    </div>
-    <div class="objection-response">
-        <p>"I hear you. But consider this: insurance rates change frequently, and waiting could mean missing out on significant savings. When was the last time you reviewed your current policy?"</p>
-        <div class="follow-up">
-            <p>Urgency building:</p>
-            <p>"The best time to save money is always right now. We can get this started in just a few minutes, and you'll be protected immediately. Would you like to see how much you could save?"</p>
-        </div>
-        <div class="tip-box">
-            <i data-feather="zap"></i>
-            <span>Create a sense of urgency without being pushy</span>
-        </div>
-    </div>
-</div>
-
-<div class="objection-card" data-category="timing">
-    <div class="objection-title">
-        <i data-feather="clock"></i>
-        <span>"I'm too busy right now"</span>
-    </div>
-    <div class="objection-response">
-        <p>"I completely understand being busy. That's why I'm prepared to make this as quick and painless as possible. I can get you a comprehensive quote in less than 5 minutes. Shall we get started?"</p>
-        <div class="follow-up">
-            <p>Time-saving approach:</p>
-            <p>"I have all the tools to make this fast. I just need a few key pieces of information, and we can have you potentially saving money in the next few minutes."</p>
-        </div>
-        <div class="tip-box">
-            <i data-feather="zap"></i>
-            <span>Emphasize speed and efficiency</span>
-        </div>
-    </div>
-</div>
-                <div class="objection-card" data-category="hesitation">
-    <div class="objection-title">
-        <i data-feather="help-circle"></i>
-        <span>"I'm not sure I want to switch"</span>
-    </div>
-    <div class="objection-response">
-        <p>"Uncertainty is natural. What specifically is making you hesitate? Is it concerns about coverage, price, or the switching process?"</p>
-        <div class="follow-up">
-            <p>Addressing concerns:</p>
-            <p>"Let me walk you through our process. We'll ensure seamless coverage, help you cancel your old policy, and potentially save you money. Would you like to hear more?"</p>
-        </div>
-        <div class="tip-box">
-            <i data-feather="zap"></i>
-            <span>Turn hesitation into an opportunity for education</span>
-        </div>
-    </div>
-</div>
-
-<div class="objection-card" data-category="hesitation">
-    <div class="objection-title">
-        <i data-feather="anchor"></i>
-        <span>"I'm loyal to my current insurance company"</span>
-    </div>
-    <div class="objection-response">
-        <p>"Loyalty is admirable. But true loyalty should be rewarded with the best possible service and rates. Would you be open to seeing how we can provide even better protection at a potentially lower cost?"</p>
-        <div class="follow-up">
-            <p>Loyalty angle:</p>
-            <p>"We value customer loyalty too. In fact, we offer multiple loyalty discounts that could save you even more money over time."</p>
-        </div>
-        <div class="tip-box">
-            <i data-feather="zap"></i>
-            <span>Respect their loyalty while offering a compelling alternative</span>
-        </div>
-    </div>
-</div>
-                <div class="objection-card" data-category="verification">
-    <div class="objection-title">
-        <i data-feather="lock"></i>
-        <span>"How do I know my information is secure?"</span>
-    </div>
-    <div class="objection-response">
-        <p>"Great question. We use bank-level encryption and follow strict privacy laws. Your personal information is protected every step of the way. Would you like me to explain our data protection measures?"</p>
-        <div class="follow-up">
-            <p>Detailed explanation:</p>
-            <p>"We're compliant with federal and state regulations, use secure servers, and never sell your personal information to third parties."</p>
-        </div>
-        <div class="tip-box">
-            <i data-feather="zap"></i>
-            <span>Build trust through transparency</span>
-        </div>
-    </div>
-</div>
-
-<div class="objection-card" data-category="verification">
-    <div class="objection-title">
-        <i data-feather="user-x"></i>
-        <span>"Why do you need so much information?"</span>
-    </div>
-    <div class="objection-response">
-        <p>"Each piece of information helps us find the most accurate and cost-effective coverage for you. The more precise details we have, the better we can tailor a policy to your exact needs."</p>
-        <div class="follow-up">
-            <p>Benefit-focused approach:</p>
-            <p>"For example, your address helps us find location-specific discounts, and your driving history helps us identify potential savings opportunities."</p>
-        </div>
-        <div class="tip-box">
-            <i data-feather="zap"></i>
-            <span>Connect each information request to a direct benefit</span>
-        </div>
-    </div>
-</div>
                 <!-- End of objection cards -->
             </div>
         </div>
     </div>
  <script>
-// Initialize everything when the document is ready
-document.addEventListener('DOMContentLoaded', function() {
-    feather.replace();
-    setupEventListeners();
-});
-    
-    // Set up initial event listeners
-    setupEventListeners();
-    
-    // Show initial section
-    showSection('intro');
-});
+    // Initialize everything when the document is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Set up initial event listeners
+        setupEventListeners();
+        
+        // Show initial section
+        showSection('intro');
+    });
 
-function setupEventListeners() {
-    // Objection card clicks
-    document.querySelectorAll('.objection-card').forEach(card => {
-        card.addEventListener('click', function(event) {
-            // Prevent event from bubbling up
-            event.stopPropagation();
+    function setupEventListeners() {
+        // Objection card clicks
+        document.querySelectorAll('.objection-card').forEach(card => {
+            card.addEventListener('click', () => toggleObjection(card));
+        });
 
-            // Find the response within this specific card
-            const response = this.querySelector('.objection-response');
-            
-            // If response exists
-            if (response) {
-                // First, close all other responses
-                document.querySelectorAll('.objection-response').forEach(r => {
-                    if (r !== response) {
-                        r.classList.remove('active');
-                    }
-                });
+        // Tab navigation
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        });
 
-                // Toggle this specific response
-                response.classList.toggle('active');
+        // Quick response buttons
+        document.querySelectorAll('.response-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent objection card from toggling
+                showResponse(btn.dataset.response);
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.objections-search input');
+        searchInput.addEventListener('input', (e) => searchObjections(e.target.value));
+
+        // Closing buttons
+        document.querySelectorAll('.closing-btn').forEach(btn => {
+            btn.addEventListener('click', () => showCloseScript(btn.dataset.type));
+        });
+    }
+
+    function toggleObjection(card) {
+        const response = card.querySelector('.objection-response');
+        const isVisible = response.classList.contains('active');
+        
+        // Hide all other responses
+        document.querySelectorAll('.objection-response').forEach(r => {
+            r.classList.remove('active');
+        });
+
+        // Show/hide clicked response
+        if (!isVisible) {
+            response.classList.add('active');
+        }
+    }
+
+    function switchTab(tabId) {
+        // Update active tab button
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.tab === tabId);
+        });
+
+        // Filter objections
+        const objections = document.querySelectorAll('.objection-card');
+        if (tabId === 'top10') {
+            objections.forEach((obj, index) => {
+                obj.style.display = index < 10 ? 'block' : 'none';
+            });
+        } else {
+            objections.forEach(obj => {
+                obj.style.display = obj.dataset.category === tabId ? 'block' : 'none';
+            });
+        }
+    }
+
+    function showResponse(responseId) {
+        const responseMap = {
+            'name-yes': {
+                text: "Great! Let's continue with verifying your information to get you the best possible rate.",
+                tip: "Move quickly to next verification item"
+            },
+            'name-no': {
+                text: "I apologize for the error. Could you please provide your correct name for our records?",
+                tip: "Update information before proceeding"
+            },
+            'address-hesitant': {
+                text: "I understand your concern. As a licensed agent, I need this information to provide accurate quotes and ensure you get all available discounts. This information is protected by law.",
+                tip: "Emphasize security and necessity"
+            },
+            'address-bundle': {
+                text: "And is this address for a home you own? I ask because we could look at additional discounts if we bundle your auto and home insurance.",
+                tip: "Natural transition to bundling opportunity"
+            },
+            'dob-hesitant': {
+                text: "Your date of birth helps us apply age-related discounts and ensure accurate coverage. This information is protected by strict privacy laws.",
+                tip: "Connect to benefits and security"
+            },
+            'dob-why': {
+                text: "Good question. Your date of birth helps us: 1) Verify your identity for security, 2) Apply age-related discounts, and 3) Ensure accurate coverage based on your driving experience.",
+                tip: "Three clear reasons for requesting DOB"
+            },
+            'rate-hesitant': {
+                text: "I understand your hesitation. I'm asking so I can make sure I beat your current rate. Would you be interested if I could save you $X per month?",
+                tip: "Use bracketing technique to get a range"
+            },
+            'vehicle-current': {
+                text: "Perfect. And do you anticipate any changes to your vehicles in the next 6 months? I ask because we can easily add coverage for any new vehicles.",
+                tip: "Plan for future needs"
             }
-        });
-    });
+        };
 
-    // Rest of your existing event listener setup...
-}
-
-// Ensure this is called when the DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    feather.replace();
-    setupEventListeners();
-});
-
-
-    // Search functionality
-    const searchInput = document.querySelector('.objections-search input');
-    searchInput.addEventListener('input', (e) => searchObjections(e.target.value));
-
-    // Closing buttons
-    document.querySelectorAll('.closing-btn').forEach(btn => {
-        btn.addEventListener('click', () => showCloseScript(btn.dataset.type));
-    });
-}
-
-    // Add listeners for additional buttons within objection cards
-    document.querySelectorAll('.objection-card .quick-responses .response-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent parent card from toggling
-            
-            const responseId = btn.getAttribute('data-response');
-            const card = btn.closest('.objection-card');
-            const responseContainer = card.querySelector('.objection-response');
-            
-            // Show the specific rebuttal
-            showObjectionResponse(responseId, responseContainer);
-        });
-    });
-}
-
-function switchTab(tabId) {
-    // Update active tab button
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.tab === tabId);
-    });
-
-    // Filter objections
-    const objections = document.querySelectorAll('.objection-card');
-    objections.forEach(obj => {
-        // Show all for top10, or filter by category
-        obj.style.display = (tabId === 'top10' || obj.dataset.category === tabId) ? 'block' : 'none';
-    });
-
-    // Reset any open responses
-    document.querySelectorAll('.objection-response').forEach(resp => {
-        resp.classList.remove('active');
-    });
-}
-
-function showObjectionResponse(responseId, container) {
-    const responseMap = {
-        // Common objection responses
-        'time-limited': {
-            text: "I understand you're busy. I can get you a quick quote in just a few minutes. Shall we proceed?",
-            tip: "Emphasize efficiency and speed"
-        },
-        'privacy-concern': {
-            text: "I completely understand your privacy concerns. As a licensed agent, I'm bound by strict privacy laws. Your information is protected and used solely to provide you the best possible rate.",
-            tip: "Reassure about data protection"
-        },
-        'current-rate-happy': {
-            text: "Many customers were happy with their current rate until they saw how much they could save. Would you be interested in a quick comparison?",
-            tip: "Create curiosity about potential savings"
-        },
-        'need-spouse-consult': {
-            text: "Great idea to discuss with your spouse. I can provide a quote now that you can review together. Would that be helpful?",
-            tip: "Offer actionable next step"
-        },
-        'hesitant-about-switch': {
-            text: "I understand your hesitation. Let me walk you through how smooth and beneficial switching can be. What specific concerns do you have?",
-            tip: "Address underlying concerns"
-        },
-        'name-yes': {
-            text: "Great! Let's continue with verifying your information to get you the best possible rate.",
-            tip: "Move quickly to next verification item"
-        },
-        'name-no': {
-            text: "I apologize for the error. Could you please provide your correct name for our records?",
-            tip: "Update information before proceeding"
-        },
-        'address-hesitant': {
-            text: "I understand your concern. As a licensed agent, I need this information to provide accurate quotes and ensure you get all available discounts. This information is protected by law.",
-            tip: "Emphasize security and necessity"
-        },
-        'address-bundle': {
-            text: "And is this address for a home you own? I ask because we could look at additional discounts if we bundle your auto and home insurance.",
-            tip: "Natural transition to bundling opportunity"
-        },
-        'dob-hesitant': {
-            text: "Your date of birth helps us apply age-related discounts and ensure accurate coverage. This information is protected by strict privacy laws.",
-            tip: "Connect to benefits and security"
-        },
-        'dob-why': {
-            text: "Good question. Your date of birth helps us: 1) Verify your identity for security, 2) Apply age-related discounts, and 3) Ensure accurate coverage based on your driving experience.",
-            tip: "Three clear reasons for requesting DOB"
-        },
-        'rate-hesitant': {
-            text: "I understand your hesitation. I'm asking so I can make sure I beat your current rate. Would you be interested if I could save you $X per month?",
-            tip: "Use bracketing technique to get a range"
-        },
-        'vehicle-current': {
-            text: "Perfect. And do you anticipate any changes to your vehicles in the next 6 months? I ask because we can easily add coverage for any new vehicles.",
-            tip: "Plan for future needs"
-        }
-    };
-
-    // If no specific response found, use a generic message
-    const response = responseMap[responseId] || {
-        text: "Thank you for sharing your concern. How can I help address this?",
-        tip: "Listen and find a solution"
-    };
-
-    // Create the response element
-    const responseElement = document.createElement('div');
-    responseElement.className = 'objection-follow-up';
-    responseElement.innerHTML = `
-        <p>${response.text}</p>
-        <div class="tip-box">
-            <i data-feather="zap"></i>
-            <span>${response.tip}</span>
-        </div>
-    `;
-
-    // Clear any existing follow-up
-    const existingFollowUp = container.querySelector('.objection-follow-up');
-    if (existingFollowUp) {
-        existingFollowUp.remove();
-    }
-
-    // Append the new response
-    container.appendChild(responseElement);
-    
-    // Ensure the response is visible
-    container.classList.add('active');
-
-    // Replace feather icons
-    if (window.feather) {
-        feather.replace();
-    }
-}
-
-function showResponse(responseId) {
-    const responseMap = {
-        'name-yes': {
-            text: "Great! Let's continue with verifying your information to get you the best possible rate.",
-            tip: "Move quickly to next verification item"
-        },
-        'name-no': {
-            text: "I apologize for the error. Could you please provide your correct name for our records?",
-            tip: "Update information before proceeding"
-        },
-        'address-hesitant': {
-            text: "I understand your concern. As a licensed agent, I need this information to provide accurate quotes and ensure you get all available discounts. This information is protected by law.",
-            tip: "Emphasize security and necessity"
-        },
-        'address-bundle': {
-            text: "And is this address for a home you own? I ask because we could look at additional discounts if we bundle your auto and home insurance.",
-            tip: "Natural transition to bundling opportunity"
-        },
-        'dob-hesitant': {
-            text: "Your date of birth helps us apply age-related discounts and ensure accurate coverage. This information is protected by strict privacy laws.",
-            tip: "Connect to benefits and security"
-        },
-        'dob-why': {
-            text: "Good question. Your date of birth helps us: 1) Verify your identity for security, 2) Apply age-related discounts, and 3) Ensure accurate coverage based on your driving experience.",
-            tip: "Three clear reasons for requesting DOB"
-        },
-        'rate-hesitant': {
-            text: "I understand your hesitation. I'm asking so I can make sure I beat your current rate. Would you be interested if I could save you $X per month?",
-            tip: "Use bracketing technique to get a range"
-        },
-        'vehicle-current': {
-            text: "Perfect. And do you anticipate any changes to your vehicles in the next 6 months? I ask because we can easily add coverage for any new vehicles.",
-            tip: "Plan for future needs"
-        }
-    };
-
-    const response = responseMap[responseId];
-    if (response) {
-        const tipBox = document.createElement('div');
-        tipBox.className = 'tip-box active';
-        tipBox.innerHTML = `
-            <i data-feather="zap"></i>
-            <div>
-                <p>${response.text}</p>
-                <small>${response.tip}</small>
-            </div>
-        `;
-        
-        // Remove any existing active tip boxes
-        document.querySelectorAll('.tip-box.active').forEach(box => box.remove());
-        
-        // Add new tip box
-        document.querySelector('.script-flow').appendChild(tipBox);
-        feather.replace();
-        
-        // Scroll to tip box
-        tipBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-}
-
-function showCloseScript(type) {
-    const closeScripts = {
-        'bank': {
-            text: "Great choice! Setting up automatic payments with your bank account also qualifies you for our paid-in-full discount. What's your routing and account number?",
-            tip: "Mention additional savings for bank draft"
-        },
-        'card': {
-            text: "Perfect! I can help you set that up right now. Which card would you like to use? We accept all major credit and debit cards.",
-            tip: "Move quickly to card information"
-        },
-        'schedule': {
-            text: "I understand. Keep in mind that rates can change daily. Would you feel more comfortable if we got everything set up now and scheduled your first payment for [future date]?",
-            tip: "Maintain urgency while offering flexibility"
-        }
-    };
-
-    const script = closeScripts[type];
-    if (script) {
-        const closeSection = document.querySelector('.closing-section');
-        closeSection.innerHTML += `
-            <div class="close-script-box">
-                <p>${script.text}</p>
-                <div class="tip-box">
-                    <i data-feather="zap"></i>
-                    <span>${script.tip}</span>
+        const response = responseMap[responseId];
+        if (response) {
+            const tipBox = document.createElement('div');
+            tipBox.className = 'tip-box active';
+            tipBox.innerHTML = `
+                <i data-feather="zap"></i>
+                <div>
+                    <p>${response.text}</p>
+                    <small>${response.tip}</small>
                 </div>
+            `;
+            
+            // Remove any existing active tip boxes
+            document.querySelectorAll('.tip-box.active').forEach(box => box.remove());
+            
+            // Add new tip box
+            document.querySelector('.script-flow').appendChild(tipBox);
+            feather.replace();
+            
+            // Scroll to tip box
+            tipBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }
+
+    function showCloseScript(type) {
+        const closeScripts = {
+            'bank': {
+                text: "Great choice! Setting up automatic payments with your bank account also qualifies you for our paid-in-full discount. What's your routing and account number?",
+                tip: "Mention additional savings for bank draft"
+            },
+            'card': {
+                text: "Perfect! I can help you set that up right now. Which card would you like to use? We accept all major credit and debit cards.",
+                tip: "Move quickly to card information"
+            },
+            'schedule': {
+                text: "I understand. Keep in mind that rates can change daily. Would you feel more comfortable if we got everything set up now and scheduled your first payment for [future date]?",
+                tip: "Maintain urgency while offering flexibility"
+            }
+        };
+
+        const script = closeScripts[type];
+        if (script) {
+            const closeSection = document.querySelector('.closing-section');
+            closeSection.innerHTML += `
+                <div class="close-script-box">
+                    <p>${script.text}</p>
+                    <div class="tip-box">
+                        <i data-feather="zap"></i>
+                        <span>${script.tip}</span>
+                    </div>
+                </div>
+            `;
+            feather.replace();
+        }
+    }
+
+    function searchObjections(term) {
+        const searchTerm = term.toLowerCase();
+        
+        document.querySelectorAll('.objection-card').forEach(card => {
+            const title = card.querySelector('.objection-title').textContent.toLowerCase();
+            const response = card.querySelector('.objection-response').textContent.toLowerCase();
+            const shouldShow = title.includes(searchTerm) || response.includes(searchTerm);
+            
+            card.style.display = shouldShow ? 'block' : 'none';
+        });
+    }
+
+    // Helper function to format currency
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(amount);
+    }
+
+    // Helper function to calculate savings
+    function calculateSavings(currentRate, newRate) {
+        const savings = currentRate - newRate;
+        return {
+            monthly: savings,
+            annual: savings * 12
+        };
+    }
+
+    // Additional functionality for handling specific scenarios
+    function handleTimeObjection(minutes) {
+        const response = `I understand you're busy. Good news - I only need ${Math.max(1, minutes - 2)} minutes to show you how much you could save. Should we get started?`;
+        showCustomResponse(response);
+    }
+
+    function showCustomResponse(text) {
+        const responseBox = document.createElement('div');
+        responseBox.className = 'custom-response-box';
+        responseBox.innerHTML = `
+            <p>${text}</p>
+            <div class="response-actions">
+                <button onclick="handlePositiveResponse()">Positive Response</button>
+                <button onclick="handleNegativeResponse()">Need More Info</button>
             </div>
         `;
-        feather.replace();
-    }
-}
-
-function searchObjections(term) {
-    const searchTerm = term.toLowerCase();
-    
-    document.querySelectorAll('.objection-card').forEach(card => {
-        const title = card.querySelector('.objection-title').textContent.toLowerCase();
-        const response = card.querySelector('.objection-response').textContent.toLowerCase();
-        const shouldShow = title.includes(searchTerm) || response.includes(searchTerm);
         
-        card.style.display = shouldShow ? 'block' : 'none';
-    });
-}
+        document.querySelector('.script-flow').appendChild(responseBox);
+        responseBox.scrollIntoView({ behavior: 'smooth' });
+    }
 
-// Helper function to format currency
-function formatCurrency(amount) {
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-    }).format(amount);
-}
+    function handlePositiveResponse() {
+        // Continue with the sales process
+        showSection('quote');
+    }
 
-// Helper function to calculate savings
-function calculateSavings(currentRate, newRate) {
-    const savings = currentRate - newRate;
-    return {
-        monthly: savings,
-        annual: savings * 12
-    };
-}
+    function handleNegativeResponse() {
+        // Show additional information or objection handling
+        showSection('objections');
+    }
 
-// Additional functionality for handling specific scenarios
-function handleTimeObjection(minutes) {
-    const response = `I understand you're busy. Good news - I only need ${Math.max(1, minutes - 2)} minutes to show you how much you could save. Should we get started?`;
-    showCustomResponse(response);
-}
-
-function showCustomResponse(text) {
-    const responseBox = document.createElement('div');
-    responseBox.className = 'custom-response-box';
-    responseBox.innerHTML = `
-        <p>${text}</p>
-        <div class="response-actions">
-            <button onclick="handlePositiveResponse()">Positive Response</button>
-            <button onclick="handleNegativeResponse()">Need More Info</button>
-        </div>
-    `;
-    
-    document.querySelector('.script-flow').appendChild(responseBox);
-    responseBox.scrollIntoView({ behavior: 'smooth' });
-}
-
-function handlePositiveResponse() {
-    // Continue with the sales process
-    showSection('quote');
-}
-
-function handleNegativeResponse() {
-    // Show additional information or objection handling
-    showSection('objections');
-}
-
-// Added placeholder for showSection function
-function showSection(sectionName) {
-    console.log(`Showing section: ${sectionName}`);
-    // Implement section showing logic if needed
-}
-
-// Export key functions for external use if needed
-window.showResponse = showResponse;
-window.showCloseScript = showCloseScript;
-window.handleTimeObjection = handleTimeObjection;
+    // Export key functions for external use if needed
+    window.showResponse = showResponse;
+    window.showCloseScript = showCloseScript;
+    window.handleTimeObjection = handleTimeObjection;
 </script>
