@@ -814,22 +814,25 @@ body {
  <script>
     // Initialize everything when the document is ready
     document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Feather Icons
-        feather.replace();
-        
-        // Set up initial event listeners
-        setupEventListeners();
-        
-        // Show initial section
-        showSection('intro');
-    });
+    feather.replace();
+    setupEventListeners();
+});
 
     function setupEventListeners() {
-        // Objection card clicks
-        document.querySelectorAll('.objection-card').forEach(card => {
-            card.addEventListener('click', () => toggleObjection(card));
-        });
+    // Objection card clicks
+    document.querySelectorAll('.objection-card').forEach(card => {
+        card.addEventListener('click', function() {
+            // Remove active class from all objection responses
+            document.querySelectorAll('.objection-response').forEach(resp => {
+                resp.classList.remove('active');
+            });
 
+            // Toggle the clicked card's response
+            const response = this.querySelector('.objection-response');
+            if (response) {
+                response.classList.toggle('active');
+            }
+        });
         // Tab navigation
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => switchTab(btn.dataset.tab));
