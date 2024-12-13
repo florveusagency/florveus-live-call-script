@@ -25,6 +25,22 @@
     --success: #10b981;
     --warning: #f59e0b;
     --error: #ef4444;
+            /* Explicitly define colors with high contrast */
+    --bg-primary: #003087;  /* Allstate Blue */
+    --text-primary: #FFFFFF;  /* White for high contrast */
+    --bg-secondary: #FFD100;  /* Allstate Yellow */
+    --text-secondary: #1A1A1A;  /* Dark text on yellow */
+}
+
+body {
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+}
+
+/* Force color inheritance */
+* {
+    color: inherit;
+}
     
     /* Ensure text colors are explicitly set */
     color-scheme: light;
