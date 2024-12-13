@@ -6,13 +6,9 @@
     <title>Insurance Sales Script Navigator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.1/feather.min.js"></script>
     <style>
-        :root {
+       :root {
     --primary: #003087;  /* Allstate Blue */
-    --primary-dark: #002266;
-    --primary-light: #004db3;
     --secondary: #FFD100;  /* Allstate Yellow */
-    --secondary-dark: #e6bc00;
-    --secondary-light: #ffdb4d;
     --dark: #1A1A1A;
     --light: #FFFFFF;
     --gray-100: #f3f4f6;
@@ -25,403 +21,327 @@
     --success: #10b981;
     --warning: #f59e0b;
     --error: #ef4444;
-            /* Explicitly define colors with high contrast */
-    --bg-primary: #003087;  /* Allstate Blue */
-    --text-primary: #FFFFFF;  /* White for high contrast */
-    --bg-secondary: #FFD100;  /* Allstate Yellow */
-    --text-secondary: #1A1A1A;  /* Dark text on yellow */
 }
 
-body {
-    color: var(--text-primary);
-    background-color: var(--bg-primary);
-}
-
-/* Force color inheritance */
 * {
-    color: inherit;
-}
-    
-    /* Ensure text colors are explicitly set */
-    color-scheme: light;
-    color: var(--light); /* Default text color */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 body {
     background-color: var(--light);
-    color: var(--dark); /* Ensure body text is dark */
+    height: 100vh;
+    overflow: hidden;
 }
 
-/* Specific sections can override as needed */
-.script-area, 
-.script-flow, 
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Main Script Area */
+.script-area {
+    flex: 1;
+    padding: 2rem;
+    background: var(--light);
+    overflow-y: auto;
+    border-right: 1px solid var(--gray-200);
+}
+
+.script-header {
+    background: var(--primary);
+    color: var(--light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.script-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.script-header p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
 .verification-section {
+    background: var(--gray-100);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.verification-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--light);
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--gray-200);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.verification-item:hover {
+    border-color: var(--primary);
+    transform: translateY(-1px);
+}
+
+.verification-item i {
+    color: var(--primary);
+}
+
+.script-flow {
+    background: var(--light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 1.5rem;
+}
+
+.flow-step {
+    padding: 1rem;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.flow-step:last-child {
+    border-bottom: none;
+}
+
+.flow-step h3 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.script-text {
+    color: var(--gray-700);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.quick-responses {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.response-btn {
+    background: var(--gray-100);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    color: var(--gray-700);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.response-btn:hover {
+    background: var(--secondary);
     color: var(--dark);
 }
 
-.closing-section, 
+.tip-box {
+    background: var(--gray-100);
+    border-left: 4px solid var(--secondary);
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.tip-box i {
+    color: var(--secondary);
+}
+
+/* Objections Panel */
 .objections-panel {
+    width: 400px;
+    background: var(--light);
+    border-left: 1px solid var(--gray-200);
+    display: flex;
+    flex-direction: column;
+}
+
+.objections-header {
+    padding: 1.5rem;
+    background: var(--primary);
     color: var(--light);
 }
 
-.script-text, 
-.verify-content,
-.verification-item p {
-    color: var(--dark);
+.objections-header h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
 }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-
-        body {
-            background-color: var(--light);
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .container {
-            display: flex;
-            height: 100vh;
-        }
-
-        /* Main Script Area */
-        .script-area {
-            flex: 1;
-            padding: 2rem;
-            background: var(--light);
-            overflow-y: auto;
-            border-right: 1px solid var(--gray-200);
-        }
-
-        .script-header {
-            background: var(--primary);
-            color: var(--light);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-        }
-
-        .script-header h1 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .script-header p {
-            font-size: 0.95rem;
-            opacity: 0.9;
-        }
-
-        .verification-section {
-            background: var(--gray-100);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-
-        .verification-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--light);
-            border-radius: 6px;
-            margin-bottom: 0.5rem;
-            border: 1px solid var(--gray-200);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .verification-item:hover {
-            border-color: var(--primary);
-            transform: translateY(-1px);
-        }
-
-        .verification-item i {
-            color: var(--primary);
-        }
-
-        .script-flow {
-            background: var(--light);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--gray-200);
-            margin-bottom: 1.5rem;
-        }
-
-        .flow-step {
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .flow-step:last-child {
-            border-bottom: none;
-        }
-
-        .flow-step h3 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .script-text {
-            color: var(--gray-700);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .quick-responses {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 0.5rem;
-        }
-
-        .response-btn {
-            background: var(--gray-100);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            color: var(--gray-700);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
-        }
-
-        .response-btn:hover {
-            background: var(--secondary);
-            color: var(--dark);
-        }
-
-        /* Objections Panel */
-        .objections-panel {
-            width: 400px;
-            background: var(--light);
-            border-left: 1px solid var(--gray-200);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .objections-header {
-            padding: 1.5rem;
-            background: var(--primary);
-            color: var(--light);
-        }
-
-        .objections-header h2 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .objections-search {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem;
-            border-radius: 4px;
-        }
-
-        .objections-search input {
-            background: transparent;
-            border: none;
-            color: var(--light);
-            width: 100%;
-            outline: none;
-        }
-
-        .objections-search input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .objections-tabs {
-            display: flex;
-            gap: 0.25rem;
-            padding: 1rem;
-            background: var(--gray-100);
-            overflow-x: auto;
-        }
-
-        .tab-btn {
-            padding: 0.5rem 1rem;
-            background: transparent;
-            border: none;
-            color: var(--gray-600);
-            cursor: pointer;
-            white-space: nowrap;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .tab-btn.active {
-            background: var(--primary);
-            color: var(--light);
-        }
-
-        .objections-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1.5rem;
-        }
-
-        .objection-card {
-            background: var(--light);
-            border: 1px solid var(--gray-200);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .objection-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-1px);
-        }
-
-        .objection-title {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .objection-response {
-            display: none;
-            margin-top: 0.5rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid var(--gray-200);
-        }
-
-        .objection-response.active {
-            display: block;
-        }
-
-        .tip-box {
-            background: var(--gray-100);
-            border-left: 4px solid var(--secondary);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 4px 4px 0;
-        }
-
-        .tip-box i {
-            color: var(--secondary);
-        }
-
-        /* Closing Section */
-       .closing-section {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+.objections-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem;
+    border-radius: 4px;
 }
 
-.closing-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(0,0,0,0.1));
-    opacity: 0.3;
+.objections-search input {
+    background: transparent;
+    border: none;
+    color: var(--light);
+    width: 100%;
+    outline: none;
+}
+
+.objections-search input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.objections-tabs {
+    display: flex;
+    gap: 0.25rem;
+    padding: 1rem;
+    background: var(--gray-100);
+    overflow-x: auto;
+}
+
+.tab-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--gray-600);
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+    background: var(--primary);
+    color: var(--light);
+}
+
+.objections-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+.objection-card {
+    background: var(--light);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.objection-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-1px);
+}
+
+.objection-title {
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.objection-response {
+    display: none;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--gray-200);
+}
+
+.objection-response.active {
+    display: block;
+}
+
+/* Closing Section Specific Styles */
+.closing-section {
+    background: var(--primary);
+    color: var(--light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
 }
 
 .closing-section h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    color: var(--light);
+    margin-bottom: 1rem;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    color: var(--secondary);
-    position: relative;
-    z-index: 1;
+    gap: 0.5rem;
 }
 
-.closing-text {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-    color: rgba(255,255,255,0.9);
-    position: relative;
-    z-index: 1;
+.closing-section .script-text {
+    color: var(--light);
 }
 
-        .closing-section .closing-text {
-    color: var(--light); /* Pure white text */
-}
-        
-        .closing-response {
-    background: transparent; /* Remove background blur */
-    color: var(--secondary); /* Yellow text for tips */
+.closing-section .tip-box {
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid var(--secondary);
     padding: 1rem;
-    margin-top: 1rem;
+    margin: 1rem 0;
+    border-radius: 0 4px 4px 0;
+    color: var(--light);
+}
+
+.closing-section .tip-box i {
+    color: var(--secondary);
 }
 
 .closing-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
     gap: 1rem;
-    margin-top: 1.5rem;
-    position: relative;
-    z-index: 1;
+    margin-top: 1rem;
 }
 
 .closing-btn {
-    background-color: var(--bg-secondary);
-    color: var(--text-secondary);
-}
-
-.closing-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: all 0.5s ease;
-}
-
-.closing-btn:hover::before {
-    left: 100%;
+    background: var(--secondary);
+    color: var(--dark);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
 .closing-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-    background: var(--secondary-light);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.closing-btn i {
-    width: 24px;
-    height: 24px;
-    margin-right: 0.5rem;
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .objections-panel {
+        width: 350px;
+    }
 }
 
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .objections-panel {
-                width: 350px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .objections-panel {
-                width: 100%;
-                max-height: 400px;
-            }
-        }
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .objections-panel {
+        width: 100%;
+        max-height: 400px;
+    }
+}
     </style>
 </head>
 <body>
