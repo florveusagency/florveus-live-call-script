@@ -246,13 +246,16 @@
             gap: 0.5rem;
         }
 
-             .objection-response {
-    display: none; /* Hidden by default */
-    margin-top: 0.5rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid var(--gray-200);
-}
+        .objection-response {
+            display: none;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--gray-200);
+        }
 
+        .objection-response.active {
+            display: block;
+        }
 
         .tip-box {
             background: var(--gray-100);
@@ -266,7 +269,7 @@
             color: var(--secondary);
         }
 
-        /* Closing Section */
+            /* Updated Closing Section Styles */
         .closing-section {
             background: var(--primary);
             color: var(--light);
@@ -276,10 +279,28 @@
         }
 
         .closing-section h3 {
+            color: var(--light);
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        .closing-section .script-text {
+            color: var(--light);
+        }
+
+        .closing-section .tip-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+            color: var(--light);
+        }
+
+        .closing-section .tip-box i {
+            color: var(--secondary);
         }
 
         .closing-options {
@@ -302,7 +323,6 @@
         .closing-btn:hover {
             transform: translateY(-1px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
 
         /* Responsive Design */
         @media (max-width: 1200px) {
@@ -753,18 +773,19 @@
     }
 
     function toggleObjection(card) {
-    const response = card.querySelector('.objection-response');
-    
-    if (response) {
-        response.classList.toggle('active');
+        const response = card.querySelector('.objection-response');
+        const isVisible = response.classList.contains('active');
+        
+        // Hide all other responses
+        document.querySelectorAll('.objection-response').forEach(r => {
+            r.classList.remove('active');
+        });
+
+        // Show/hide clicked response
+        if (!isVisible) {
+            response.classList.add('active');
+        }
     }
-}
-
-// Attach event listeners
-document.querySelectorAll('.objection-card').forEach(card => {
-    card.addEventListener('click', () => toggleObjection(card));
-});
-
 
     function switchTab(tabId) {
         // Update active tab button
@@ -825,13 +846,13 @@ document.querySelectorAll('.objection-card').forEach(card => {
         if (response) {
             const tipBox = document.createElement('div');
             tipBox.className = 'tip-box active';
-            tipBox.innerHTML = 
+            tipBox.innerHTML = `
                 <i data-feather="zap"></i>
                 <div>
                     <p>${response.text}</p>
                     <small>${response.tip}</small>
                 </div>
-            ;
+            `;
             
             // Remove any existing active tip boxes
             document.querySelectorAll('.tip-box.active').forEach(box => box.remove());
@@ -864,7 +885,7 @@ document.querySelectorAll('.objection-card').forEach(card => {
         const script = closeScripts[type];
         if (script) {
             const closeSection = document.querySelector('.closing-section');
-            closeSection.innerHTML += 
+            closeSection.innerHTML += `
                 <div class="close-script-box">
                     <p>${script.text}</p>
                     <div class="tip-box">
@@ -872,7 +893,7 @@ document.querySelectorAll('.objection-card').forEach(card => {
                         <span>${script.tip}</span>
                     </div>
                 </div>
-            ;
+            `;
             feather.replace();
         }
     }
@@ -908,20 +929,20 @@ document.querySelectorAll('.objection-card').forEach(card => {
 
     // Additional functionality for handling specific scenarios
     function handleTimeObjection(minutes) {
-        const response = I understand you're busy. Good news - I only need ${Math.max(1, minutes - 2)} minutes to show you how much you could save. Should we get started?;
+        const response = `I understand you're busy. Good news - I only need ${Math.max(1, minutes - 2)} minutes to show you how much you could save. Should we get started?`;
         showCustomResponse(response);
     }
 
     function showCustomResponse(text) {
         const responseBox = document.createElement('div');
         responseBox.className = 'custom-response-box';
-        responseBox.innerHTML = 
+        responseBox.innerHTML = `
             <p>${text}</p>
             <div class="response-actions">
                 <button onclick="handlePositiveResponse()">Positive Response</button>
                 <button onclick="handleNegativeResponse()">Need More Info</button>
             </div>
-        ;
+        `;
         
         document.querySelector('.script-flow').appendChild(responseBox);
         responseBox.scrollIntoView({ behavior: 'smooth' });
