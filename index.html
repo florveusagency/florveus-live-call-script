@@ -727,101 +727,48 @@
             </div>
         </div>
     </div>
-   <script>
+    <script>
 document.addEventListener('DOMContentLoaded', function() {
         feather.replace();
         setupEventListeners();
     });
 
     function setupEventListeners() {
-    // Objection card clicks with response handling
-    document.querySelectorAll('.objection-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-            // Check if the click was on the card title or response area
-            const isCardTitle = e.target.closest('.objection-title');
-            const hasResponse = card.querySelector('.objection-response');
-            
-            if (isCardTitle && hasResponse) {
-                // Toggle the response visibility
-                const response = card.querySelector('.objection-response');
-                const isVisible = response.classList.contains('active');
-                
-                // Remove active class from all objection responses
-                document.querySelectorAll('.objection-response').forEach(r => {
-                    r.classList.remove('active');
-                });
-                
-                // Add active class if it wasn't already visible
-                if (!isVisible) {
-                    response.classList.add('active');
-                }
-            }
+        // Objection card clicks
+        document.querySelectorAll('.objection-card').forEach(card => {
+            card.addEventListener('click', () => toggleObjection(card));
         });
-    });
 
-    // Quick response buttons within objection cards
-    document.querySelectorAll('.objection-card .quick-responses .response-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent card toggle
-            const responseId = btn.getAttribute('data-response');
-            showObjectionCardResponse(responseId, btn);
+        // Quick response buttons
+        document.querySelectorAll('.response-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showResponse(btn.getAttribute('data-response'));
+            });
         });
-    });
+
+        // Search functionality
+        const searchInput = document.querySelector('.objections-search input');
+        searchInput.addEventListener('input', (e) => searchObjections(e.target.value));
+
+        // Closing buttons
+        document.querySelectorAll('.closing-btn').forEach(btn => {
+            btn.addEventListener('click', () => showCloseScript(btn.getAttribute('onclick').match(/'([^']+)'/)[1]));
+        });
+    }
+
+    function toggleObjection(card) {
+        const response = card.querySelector('.objection-response');
+        const isVisible = response.classList.contains('active');
         
- function showObjectionCardResponse(responseId, clickedButton) {
-    const responseMap = {
-        'time-limited': {
-            text: "I understand you're busy. I can get you a quick quote in just a few minutes. Shall we proceed?",
-            tip: "Emphasize efficiency and speed"
-        },
-        'privacy-concern': {
-            text: "I completely understand your privacy concerns. As a licensed agent, I'm bound by strict privacy laws. Your information is protected and used solely to provide you the best possible rate.",
-            tip: "Reassure about data protection"
-        },
-        'current-rate-happy': {
-            text: "Many customers were happy with their current rate until they saw how much they could save. Would you be interested in a quick comparison?",
-            tip: "Create curiosity about potential savings"
-        },
-        'spouse-consult': {
-            text: "Great idea to discuss with your spouse. I can provide a quote now that you can review together. Would that be helpful?",
-            tip: "Offer actionable next step"
+        document.querySelectorAll('.objection-response').forEach(r => {
+            r.classList.remove('active');
+        });
+
+        if (!isVisible) {
+            response.classList.add('active');
         }
-    };
-
-    const response = responseMap[responseId] || {
-        text: "Thank you for sharing your concern. How can I help address this?",
-        tip: "Listen and find a solution"
-    };
-
-    // Remove any existing follow-up responses
-    const existingFollowUp = clickedButton.closest('.objection-response').querySelector('.objection-follow-up');
-    if (existingFollowUp) {
-        existingFollowUp.remove();
     }
-
-    // Create the response element
-    const responseElement = document.createElement('div');
-    responseElement.className = 'objection-follow-up';
-    responseElement.innerHTML = `
-        <p>${response.text}</p>
-        <div class="tip-box">
-            <i data-feather="zap"></i>
-            <span>${response.tip}</span>
-        </div>
-    `;
-
-    // Append the new response
-    clickedButton.closest('.objection-response').appendChild(responseElement);
-    
-    // Ensure the response is visible
-    const parentResponse = clickedButton.closest('.objection-response');
-    parentResponse.classList.add('active');
-
-    // Replace feather icons
-    if (window.feather) {
-        feather.replace();
-    }
-}
 
     function showResponse(responseId) {
     const responseMap = {
